@@ -1,0 +1,4 @@
+export default interface IRegisterUser {
+    username: string;
+    password: string;
+}
