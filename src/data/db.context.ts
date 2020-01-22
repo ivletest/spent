@@ -1,8 +1,9 @@
 import { Pool, ClientConfig } from "pg";
-import dotenv from "dotenv";
+import pgPromise from "pg-promise";
 import Logger from "../api/middleware/logger";
+import { pgConfig } from "../config/config";
 
-dotenv.config();
+const pgp = pgPromise({});
 
 export default class DbContext {
     public static get(): DbContext {
@@ -14,25 +15,21 @@ export default class DbContext {
     }
 
     private static instance: DbContext;
-    public pool: Pool;
+    // public pool: Pool;
+    private db = pgp(pgConfig);
 
     private constructor() {
-        this.pool = new Pool();
-
-        this.pool.on("error", (err, client) => {
-            Logger.log(`Unexpected pool client error: ${err.message}, ${err.stack}`);
-            process.exit(-1);
-        });
+        // tslint:disable: no-console
+        console.log(pgConfig.user);
+        console.log(pgConfig.password);
+        console.log(pgConfig.database);
+        console.log(pgConfig.host);
+        console.log(pgConfig.port);
     }
 
     public async query<T>(text: string, args: any[]): Promise<any> {
-        const client = await this.pool.connect();
         let response: any;
-        try {
-            response = await this.pool.query<T>(text, args);
-        } finally {
-            client?.release();
-        }
+        response = await this.db.query<T>(text, args);
 
         return response;
     }

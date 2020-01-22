@@ -1,28 +1,13 @@
-// tslint:disable: variable-name
-import { Column, Entity, PrimaryGeneratedColumn, Generated } from "typeorm";
+// // tslint:disable: variable-name
+// import EntityBase from "./base.entity";
 
-@Entity()
-class User {
-    @PrimaryGeneratedColumn()
-    public _id!: number;
+// @Entity()
+// class User extends EntityBase {
+//     @Column({ name: "user_name"})
+//     public userName!: string;
 
-    @Generated("uuid")
-    public uid!: string;
+//     @Column({ name: "password_hash"})
+//     public passwordHash!: string;
+// }
 
-    @Column()
-    public user_name!: string;
-
-    @Column()
-    public password_hash!: string;
-
-    @Column()
-    public created_on!: Date;
-
-    @Column()
-    public updated_on?: Date;
-
-    @Column()
-    public deleted_on?: Date;
-}
-
-export default User;
+// export default User;

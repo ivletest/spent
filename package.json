@@ -24,9 +24,9 @@
         "pg-promise": "^10.3.5",
         "pm2": "^4.2.1",
         "reflect-metadata": "^0.1.13",
+        "sql-template-strings": "^2.2.2",
         "swagger-ui-express": "^4.1.2",
-        "tsc-watch": "^4.0.0",
-        "typeorm": "^0.2.22"
+        "tsc-watch": "^4.0.0"
     },
     "devDependencies": {
         "@types/bcrypt": "^3.0.0",
@@ -38,6 +38,7 @@
         "@types/node": "^13.1.6",
         "@types/pg": "^7.14.1",
         "jest": "^24.9.0",
+        "node-migrate": "^0.1.0",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
         "ts-node-dev": "^1.0.0-pre.44",

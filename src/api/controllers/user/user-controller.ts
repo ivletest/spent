@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
-import "../../../extensions/string.extensions";
+import "../../utils/extensions/string.extensions";
 import IRegisterUser from "../../../models/requests/register-user.model";
 import ControllerBase from "../controller-base";
+import UserDto from "../../../data/DTOs/user.dto";
 import UserRepository from "../../../data/repository/user.repo";
 
 export default class UserController extends ControllerBase {
-    public userRepository: UserRepository;
+    private repository: UserRepository;
 
     constructor(path: string) {
         super(path);
         this.initRoutes();
-        this.userRepository = new UserRepository();
+        this.repository = new UserRepository();
     }
 
     private initRoutes() {
@@ -20,15 +21,19 @@ export default class UserController extends ControllerBase {
     private createUser(req: Request, res: Response): void {
         const body = req.body as IRegisterUser;
 
-        const username = body.username.toUsername();
-        const password = body.password.toPasswordHash();
+        const userDto = new UserDto(
+            body.username.toUsername(),
+            body.password.toPasswordHash()
+        );
 
-        this.userRepository.addUser(username, password);
-
-        res.send({
-            username: username.value,
-            passwordHash: password.hashValue,
-            saltValue: password.saltValue
-        });
+        this.repository.addUser(userDto)
+            .then((response) => {
+                res.send(response);
+            });
+        // res.send({
+        //     username: userDto.username.value,
+        //     passwordHash: userDto.password.hashValue,
+        //     saltValue: userDto.password.saltValue
+        // });
     }
 }
