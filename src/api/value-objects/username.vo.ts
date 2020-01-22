@@ -1,4 +1,4 @@
-export default class UsernameVO {
+class UsernameVO {
     public static create(username: string) {
         if (username && /[a-zA-Z][^#&<>\"~;$^%{}?]{2,20}$/g.test(username)) {
             return new UsernameVO(username);
@@ -13,3 +13,5 @@ export default class UsernameVO {
         this.value = value;
     }
 }
+
+export default UsernameVO;

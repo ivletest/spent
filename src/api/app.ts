@@ -4,14 +4,14 @@ import cors from "cors";
 import express, { Router } from "express";
 import ControllerBase from "./controllers/controller-base";
 import Logger from "./middleware/logger";
-import UserController from "./controllers/user/user-controller";
 import errorMiddleware from "./middleware/error.middleware";
+import AuthController from "./controllers/auth.controller";
 
 class App {
     public instance: express.Application;
     public port: number | string;
     public controllers: ControllerBase[] = [
-        new UserController("/users")
+        new AuthController("/auth")
     ];
 
     constructor(port: number | string) {
@@ -31,6 +31,7 @@ class App {
     }
 
     private initializeDb(): void {
+        const i = 1;
     }
 
     private initializeMiddleware(): void {
