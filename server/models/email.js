@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   Email.associate = function(models) {
     Email.hasOne(models.User, {
         foreignKey: userFk,
-        targetKey: id
+        targetKey: id,
+        onDelete: "CASCADE"
     })
   };
   return Email;

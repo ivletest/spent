@@ -8,7 +8,13 @@ module.exports = {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: 0,
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
   },
   test: {
     username: process.env.PG_USER,
@@ -17,7 +23,13 @@ module.exports = {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: 0,
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
   },
   production: {
     username: process.env.PG_USER,
@@ -26,6 +38,12 @@ module.exports = {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
     dialect: "postgres",
-    operatorsAliases: false
+    operatorsAliases: 0,
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
   }
 }
