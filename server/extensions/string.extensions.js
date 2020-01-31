@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 String.prototype.validateAndHashPassword = function() {
     const password = String(this);
     if (password && password.trim().length >= 6) {
-        const salt = bcrypt.genSaltSync(16);
+        const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
         return {hash, salt};
     } else {

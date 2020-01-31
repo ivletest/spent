@@ -7,6 +7,10 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 
 const app = express();
+const db = require("./server/models");
+
+// Setup db
+db.sequelize.sync();
 
 // Setup middleware
 app.use(logger("dev"));

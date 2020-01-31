@@ -1,20 +1,35 @@
 'use strict';
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
-        uid: DataTypes.UUID,
-        role: { 
+        uid: {
+            type: DataTypes.UUID,
+            allowNulls: false,
+            defaultValue: Sequelize.UUIDV4
+        },
+        role: {
             type: DataTypes.ENUM,
             values: ['user', 'admin', 'disabled']
         },
-        name: DataTypes.STRING,
-        passwordHash: DataTypes.STRING,
-        passwordSalt: DataTypes.STRING
+        name: {
+            type: DataTypes.STRING,
+            allowNulls: false
+        },
+        passwordHash: {
+            type: DataTypes.STRING,
+            allowNulls: false
+        },
+        passwordSalt: {
+            type: DataTypes.STRING,
+            allowNulls: false
+        }
     }, {
         paranoid: true,
         underscored: true
     });
     User.associate = function (models) {
-        // associations can be defined here
+        User.hasMany(models.Email, { as: "email" })
     };
     return User;
 };

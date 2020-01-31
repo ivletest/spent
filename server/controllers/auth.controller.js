@@ -1,5 +1,6 @@
 'use strict';
-require ("dotenv").config();
+require("dotenv").config();
+require("../extensions/string.extensions");
 
 const express = require("express");
 const cors = require("cors");
@@ -8,33 +9,72 @@ const jwt = require("jsonwebtoken");
 const users = express.Router();
 users.use(cors());
 
-const User = require("../models/user");
-const Email = require("../models/email");
-require("../extensions/string.extensions");
+const db = require("../models/index");
 
 // REGISTER
 users.post("/register", async (req, res, next) => {
     // Validate request
     let userData = {};
     try {
-        userData = {
-            username: req.body.username.validateUsername(),
-            passwordHash: req.body.password.validateAndHashPassword().hash,
-            passwordSalt: req.body.password.validateAndHashPassword().salt,
-            email: req.body.email.validateEmail()
-        }
+
     } catch (err) {
         next(err);
     }
 
-    const email = await Email.findOne({ where: userData.email });
+    try {
+        const username = req.body.username.validateUsername()
+        const password = req.body.password.validateAndHashPassword();
+        const email = req.body.email.validateEmail();
 
-    if (email) {
-        res.send("Email already exists");
-        return;
+        userData = {
+            username: username,
+            passwordHash: password.hash,
+            passwordSalt: password.salt,
+            email: email
+        }
+
+        try {
+            const result = await sequelize.transaction(async (t) => {
+
+            });
+        } catch(err) {
+            next(err);
+        }
+        await db.Email.findOrCreate({
+            where: { address: userData.email },
+            defaults: {
+                name: userData.username,
+                passwordHash: userData.passwordHash,
+                passwordSalt: userData.passwordSalt,
+                role: "user",
+                email: {
+                    address: userData.email
+                },
+            }
+        }).spread((result, created) => {
+            console.log(result);
+        });
+        // const result = await db.User.create({
+        //     name: userData.username,
+        //     passwordHash: userData.passwordHash,
+        //     passwordSalt: userData.passwordSalt,
+        //     role: "user",
+        //     email: {
+        //         address: userData.email
+        //     }
+        // }, {
+        //     include: [{
+        //         model: db.Email,
+        //         as: "email"
+        //     }]
+        // });
+
+        // if (result) {
+        //     res.status(400).send(result);
+        // }
+    } catch (err) {
+        next(err);
     }
-
-    res.status(201).send("User created");
 });
 
 // LOGIN
