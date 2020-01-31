@@ -1,5 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
+const AuthToken = require("./authToken");
+const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define("User", {
@@ -17,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNulls: false
         },
         passwordHash: {
-            type: DataTypes.STRING,
-            allowNulls: false
-        },
-        passwordSalt: {
             type: DataTypes.STRING,
             allowNulls: false
         },
@@ -43,7 +41,60 @@ module.exports = (sequelize, DataTypes) => {
         underscored: true
     });
 
-    User.associate = function (models) {};
+    User.associate = function (models) {
+        User.hasMany(models.AuthToken);
+    };
+  
+    User.prototype.authenticate = async function(email, password) {
+        const user = User.findOne({ where: email });
+
+        if (bcrypt.compareSync(password, user.password)) {
+            return user.authorize();
+        }
+
+        throw new Error("Invalid password");
+    };
+
+    User.prototype.authorize = async function() {
+        const user = this;
+        const authToken = AuthToken.generate(user.uid);
+        await user.addAuthToken(authToken);
+
+        return { user, authToken };
+    };
+
+    User.prototype.logout = async function(token) {
+        sequelize.models.AuthToken.destroy({ where: { token }});
+    };
+
+    User.prototype.create = async function(userData) {
+        let result;
+    
+        await db.User.findOrCreate({
+            where: { email: userData.email },
+            defaults: {
+                name: userData.username,
+                passwordHash: userData.passwordHash,
+    
+                role: "user",
+                email: userData.email
+            }
+        }).spread((user, created) => {
+            const data = await user.authorize();
+    
+            result = {
+                success: created,
+                token: data.authToken.token,
+                uid: data.authToken.uid,
+                data: {
+                    username: data.user.name,
+                    email: data.user.email
+                }
+            }
+        });
+    
+        return result;
+    }
     
     return User;
 };
