@@ -3,15 +3,15 @@ require("dotenv").config();
 
 const router = require("../server").server,
     db = require("../models/index"),
-    userService = require("../services/user.service");
+    mapInput = require("../services/mappers/user.mapper");
 
 // REGISTER
 router.post({ path: "/register", version: ['1.0.0'] },
     async (request, response, next) => {
+        const registerUser = mapInput.toRegisterUserModel(request, "user");
         try {
-            const result = await userService.createUser(request);
+            let result = await db.User.create(registerUser);
             response.send(result.success ? 201 : 409, result);
-
         } catch (error) {
             response.send(500, err);
         }
@@ -21,12 +21,7 @@ router.post({ path: "/register", version: ['1.0.0'] },
 // LOGIN
 router.post({ path: "/login", version: ['1.0.0'] },
     async (request, response, next) => {
-        const { email, password } = request.body;
-
-        if (!email || !password) {
-            response.send(400, "Username and password are required");
-        }
-
+        const loginUser = mapInput.toLoginUserModel(request);
         try {
             const user = db.User.authenticate(email, password);
             response.send(201, user);

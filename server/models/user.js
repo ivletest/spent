@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = function (models) {
         User.hasMany(models.AuthToken);
     };
-  
+
     User.prototype.authenticate = async function(email, password) {
         const user = User.findOne({ where: email });
 
@@ -68,20 +68,19 @@ module.exports = (sequelize, DataTypes) => {
         sequelize.models.AuthToken.destroy({ where: { token }});
     };
 
-    User.prototype.create = async function(userData) {
+    User.prototype.create = async function(registerUser) {
         let result;
-    
         await db.User.findOrCreate({
-            where: { email: userData.email },
+            where: { email: registerUser.email },
             defaults: {
-                name: userData.username,
-                passwordHash: userData.passwordHash,
-                role: "user",
-                email: userData.email
+                name: registerUser.username,
+                passwordHash: registerUser.passwordHash,
+                email: registerUser.email,
+                role: registerUser.role
             }
         }).spread(async (user, created) => {
             const data = await user.authorize();
-    
+
             result = {
                 success: created,
                 token: data.authToken.token,
@@ -92,9 +91,9 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         });
-    
+
         return result;
     }
-    
+
     return User;
 };
