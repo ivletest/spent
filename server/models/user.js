@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         uid: {
             type: DataTypes.UUID,
             allowNulls: false,
+            unique: true,
             defaultValue: Sequelize.UUIDV4
         },
         role: {
@@ -35,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         emailValidationUid: {
             type: DataTypes.UUID,
             allowNulls: false,
+            unique: true,
             defaultValue: Sequelize.UUIDV4
         },
     }, {
@@ -42,58 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         underscored: true
     });
 
-    User.associate = function (models) {
-        User.hasMany(models.AuthToken);
-    };
-
-    User.prototype.authenticate = async function(email, password) {
-        const user = User.findOne({ where: email });
-
-        if (bcrypt.compareSync(password, user.password)) {
-            return await user.authorize();
-        }
-
-        throw new Error("Invalid password");
-    };
-
-    User.prototype.authorize = async function() {
-        const user = this;
-        const authToken = AuthToken.generate(user.uid);
-        await user.addAuthToken(authToken);
-
-        return { user, authToken };
-    };
-
-    User.prototype.logout = async function(token) {
-        sequelize.models.AuthToken.destroy({ where: { token }});
-    };
-
-    User.prototype.create = async function(registerUser) {
-        let result;
-        await db.User.findOrCreate({
-            where: { email: registerUser.email },
-            defaults: {
-                name: registerUser.username,
-                passwordHash: registerUser.passwordHash,
-                email: registerUser.email,
-                role: registerUser.role
-            }
-        }).spread(async (user, created) => {
-            const data = await user.authorize();
-
-            result = {
-                success: created,
-                token: data.authToken.token,
-                uid: data.authToken.uid,
-                data: {
-                    username: data.user.name,
-                    email: data.user.email
-                }
-            }
-        });
-
-        return result;
-    }
+    User.associate = function (models) {};
 
     return User;
 };

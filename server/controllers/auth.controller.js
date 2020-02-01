@@ -1,19 +1,20 @@
 'use strict';
 require("dotenv").config();
-
-const router = require("../server").server,
-    db = require("../models/index"),
-    mapInput = require("../services/mappers/user.mapper");
+const router = require("../server").server;
+const db = require("../models/index");
+const mapInput = require("../services/user/user.mapper");
+const userService = require("../services/user/user.service");
+const errors = require("restify-errors");
 
 // REGISTER
 router.post({ path: "/register", version: ['1.0.0'] },
     async (request, response, next) => {
-        const registerUser = mapInput.toRegisterUserModel(request, "user");
+        const user = mapInput.toRegisterUserModel(request, "user");
         try {
-            let result = await db.User.create(registerUser);
-            response.send(result.success ? 201 : 409, result);
+            let result = await userService.create(user);
+            response.send(201, result);
         } catch (error) {
-            response.send(500, err);
+            response.send(error);
         }
         next();
     });
@@ -21,9 +22,9 @@ router.post({ path: "/register", version: ['1.0.0'] },
 // LOGIN
 router.post({ path: "/login", version: ['1.0.0'] },
     async (request, response, next) => {
-        const loginUser = mapInput.toLoginUserModel(request);
+        const user = mapInput.toLoginUserModel(request);
         try {
-            const user = db.User.authenticate(email, password);
+            const user = db.User.authenticate(user);
             response.send(201, user);
         } catch (error) {
             response.send(500, err);

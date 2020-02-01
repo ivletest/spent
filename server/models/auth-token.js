@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     }, { underscored: true });
 
     AuthToken.associate = function (models) {
-        AuthToken.belongsTo(models.User);
+        AuthToken.belongsTo(models.User, {
+            foreignKey: "user_uid",
+            targetKey: "uid"
+        });
     };
 
     AuthToken.generate = async function (userUid) {
