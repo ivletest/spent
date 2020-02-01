@@ -14,6 +14,7 @@ router.post({ path: "/register", version: ['1.0.0'] },
             let result = await userService.create(user);
             response.send(201, result);
         } catch (error) {
+            console.log(error);
             response.send(error);
         }
         next();

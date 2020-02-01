@@ -13,6 +13,9 @@ async function authenticate(loginUser) {
 
 async function authorize(user) {
     const authToken = db.AuthToken.generate(user.uid);
+    // Check auth add token definition if it acccepts UID so it doesnt
+    // throw int error. i suppose it is the default implementation
+    // of addAuthToken.
     await user.addAuthToken(authToken);
 
     return { user, authToken };

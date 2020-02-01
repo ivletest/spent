@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
 
     AuthToken.associate = function (models) {
         AuthToken.belongsTo(models.User, {
-            foreignKey: "user_uid",
+            foreignKey: {
+                type: DataTypes.UUID
+            },
             targetKey: "uid"
         });
     };

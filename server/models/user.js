@@ -44,7 +44,14 @@ module.exports = (sequelize, DataTypes) => {
         underscored: true
     });
 
-    User.associate = function (models) {};
+    User.associate = function (models) {
+        User.hasMany(models.AuthToken, {
+            foreignKey: {
+                type: DataTypes.UUID
+            },
+            targetKey: "uid"
+        });
+    };
 
     return User;
 };
