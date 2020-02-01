@@ -1,6 +1,6 @@
 'use strict';
 const Sequelize = require('sequelize');
-const AuthToken = require("./authToken");
+const AuthToken = require("./auth-token");
 const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         role: {
             type: DataTypes.ENUM,
-            values: ['user', 'admin', 'disabled']
+            values: ['user', 'admin', 'disabled'],
+            defaultValue: 'user'
         },
         name: {
             type: DataTypes.STRING,
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         const user = User.findOne({ where: email });
 
         if (bcrypt.compareSync(password, user.password)) {
-            return user.authorize();
+            return await user.authorize();
         }
 
         throw new Error("Invalid password");
@@ -75,11 +76,10 @@ module.exports = (sequelize, DataTypes) => {
             defaults: {
                 name: userData.username,
                 passwordHash: userData.passwordHash,
-    
                 role: "user",
                 email: userData.email
             }
-        }).spread((user, created) => {
+        }).spread(async (user, created) => {
             const data = await user.authorize();
     
             result = {

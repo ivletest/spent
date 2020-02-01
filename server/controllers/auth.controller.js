@@ -1,61 +1,54 @@
 'use strict';
 require("dotenv").config();
-require("../extensions/string.extensions");
 
-const express = require("express");
-const cors = require("cors");
-const db = require("../models/index");
-
-const users = express.Router();
-users.use(cors());
+const router = require("../server").server,
+    db = require("../models/index"),
+    userService = require("../services/user.service");
 
 // REGISTER
-users.post("/register", async (req, res, next) => {
-    try {
-        const username = req.body.username.validateUsername()
-        const password = req.body.password.validateAndHashPassword();
-        const email = req.body.email.validateEmail();
+router.post({ path: "/register", version: ['1.0.0'] },
+    async (request, response, next) => {
+        try {
+            const result = await userService.createUser(request);
+            response.send(result.success ? 201 : 409, result);
 
-        userData = {
-            username: username,
-            passwordHash: password.hash,
-            email: email
+        } catch (error) {
+            response.send(500, err);
         }
-
-        let result = await db.User.create(userData);
-        return res.status(result.success ? 201 : 409).send(result.data);
-
-    } catch (err) {
-        return next(err);
-    }
-});
+        next();
+    });
 
 // LOGIN
-users.post("/login", async (req, res, next) => {
-    const { email, password } = req.body;
+router.post({ path: "/login", version: ['1.0.0'] },
+    async (request, response, next) => {
+        const { email, password } = request.body;
 
-    if (!email || !password) {
-        return res.status(400).send("Username and password are required");
-    }
+        if (!email || !password) {
+            response.send(400, "Username and password are required");
+        }
 
-    try{
-        const user = db.User.authenticate(email, password);
-        return res.status(200).send(user);
-    } catch(err) {
-        return next(err);
-    }
-});
+        try {
+            const user = db.User.authenticate(email, password);
+            response.send(201, user);
+        } catch (error) {
+            response.send(500, err);
+        }
+        next();
+    });
 
 // LOGOUT
-users.delete("/logout", async (req, res, next) => {
-    const { user, cookies: { auth_token: authToken }} = req;
+router.del({ path: "/logout", version: ['1.0.0'] },
+    async (request, response, next) => {
+        const { user, cookies: { auth_token: authToken } } = request;
 
-    if (!user || !authToken) {
-        return res.status(400).send({ errors: [{message: "User not authenticated."}]});
-    }
+        if (!user || !authToken) {
+            return response.send(400, {
+                errors: [{ message: "User not authenticated." }]
+            });
+        }
 
-    await req.user.logout(authToken);
-    return res.status(204).send();
-});
+        await request.user.logout(authToken);
+        return response.send(204);
+    });
 
-module.exports = users;
+module.exports = router;

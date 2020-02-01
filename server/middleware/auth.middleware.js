@@ -13,7 +13,7 @@ module.exports = async function (req, res, next) {
         if (authToken) {
             req.user = authToken.User;
         }
-
-        next();
     }
+    
+    next();
 }
