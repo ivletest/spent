@@ -5,5 +5,11 @@
     "author": "ivletest <karakan@protonmail.com>",
     "license": "MIT",
     "private": true,
-    "workspaces": ["app", "server"]
+    "workspaces": [
+        "app",
+        "server"
+    ],
+    "resolutions": {
+
+    }
 }
