@@ -62,18 +62,36 @@ async function create(registerUser) {
             throw new errors.ConflictError("User already exists.");
         }
 
+        const emailValidationUrl =
+            `${process.env.APP_HOST}/auth/validate/${user.uid}?validation_uid=${user.emailValidationUid}`;
+
         result = {
             username: user.name,
-            email: user.email
+            email: user.email,
         }
     });
 
     return result;
 }
 
+async function verify(validateUserData) {
+    await db.User.update({
+        emailIsValid: true
+    },
+    {
+        where: {
+            uid: validateUserData.userUid,
+            emailIsValid: false,
+            emailValidationUid: validateUserData.emailValidationUid
+        }
+    });
+
+}
+
 module.exports = {
     create,
     logout,
     authorize,
-    authenticate
+    authenticate,
+    verify
 };

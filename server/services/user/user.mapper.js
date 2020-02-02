@@ -49,15 +49,34 @@ function toLogoutUserModel(request) {
         throw new errors.BadRequestError("User not authenticated.");
     }
 
-    return {
+    const logoutUserModel = {
         email: email,
         token: authToken
     };
+
+    return logoutUserModel;
+}
+
+function toVerifyEmailModel(request) {
+    const userUid = request.params.uid;
+    const emailValidationUid = request.query.validation_uid;
+
+    if (!userUid || !emailValidationUid) {
+        throw new errors.BadRequestError("Invalid input data");
+    }
+
+    const validateUserModel = {
+        userUid,
+        emailValidationUid
+    }
+
+    return validateUserModel;
 }
 
 
 module.exports = {
     toRegisterUserModel,
     toLoginUserModel,
-    toLogoutUserModel
+    toLogoutUserModel,
+     toVerifyEmailModel
 }

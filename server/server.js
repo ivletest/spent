@@ -16,6 +16,7 @@ global.server = restify.createServer({
 
 // Configure Middleware
 server.use(authMiddleware);
+server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser({
     mapParams: true,
     mapFiles: false,

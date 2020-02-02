@@ -1,13 +1,13 @@
 'use strict';
 require("dotenv").config();
 const router = require("../server").server;
-const db = require("../models/index");
 const mapInput = require("../services/user/user.mapper");
 const userService = require("../services/user/user.service");
-const errors = require("restify-errors");
+
+const authPath = "/auth";
 
 // REGISTER
-router.post({ path: "/register", version: ['1.0.0'] },
+router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
@@ -22,7 +22,7 @@ router.post({ path: "/register", version: ['1.0.0'] },
     });
 
 // LOGIN
-router.post({ path: "/login", version: ['1.0.0'] },
+router.post({ path: `${authPath}/login`, version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
@@ -39,7 +39,7 @@ router.post({ path: "/login", version: ['1.0.0'] },
     });
 
 // LOGOUT
-router.del({ path: "/logout", version: ['1.0.0'] },
+router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
@@ -53,6 +53,17 @@ router.del({ path: "/logout", version: ['1.0.0'] },
     });
 
 // VERIFY
+router.patch({ path: `${authPath}/validate/:uid`, version: ['1.0.0'] },
+    async (request, response, next) => {
+        try {
+            const verificationData = mapInput.toVerifyEmailModel(request);
+            await userService.verify(verificationData);
 
+            response.send(204);
+
+        } catch(error) {
+            response.send(error);
+        }
+    });
 
 module.exports = router;
