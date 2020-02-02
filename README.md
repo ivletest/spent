@@ -4,7 +4,7 @@
 The repo is using Yarn workspaces, so you must use yarn.
 
 ## Environment file
-In the server folder put .env file formatted like
+In the root folder put .env file formatted like
 ```
 APP_HOST= application host
 APP_PORT= application port

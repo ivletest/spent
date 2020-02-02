@@ -2,8 +2,12 @@ const db = require("../../models/index");
 const errors = require("restify-errors");
 
 async function create(accountData) {
-    const account = db.Accounts.create({
 
+    const account = await db.Accounts.create({
+        is_private: accountData.isPrivate,
+        balance: accountData.balance,
+        currency: accountData.currency,
+        parent_account_id: accountData.parentAccountUid
     });
 }
 

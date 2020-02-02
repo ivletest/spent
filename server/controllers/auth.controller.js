@@ -97,6 +97,23 @@ router.post({ path: `${authPath}/login`, version: ['1.0.0'] },
     });
 
 // LOGOUT
+/**
+ * @api {delete} /auth/logout User log out.
+ * @apiName Logout
+ * @apiGroup Authentication
+ *
+ * @apiHeader {String} auth_token Authentication token.
+ *
+ * @apiError (400 BadRequest) BadRequest Invalid input data.
+ * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
+ *
+ * @apiErrorExample {json} BadRequest
+ *  HTTP/1.1 409 Bad Request
+ *  {
+ *      "code": "BadRequest",
+ *      "message": "Invalid input data"
+ *  }
+ */
 router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
     async (request, response, next) => {
 
@@ -110,7 +127,28 @@ router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
         }
     });
 
-// VERIFY
+// VALIDATE
+/**
+ * @api {patch} /auth/validate/:uid?validation_uid=:uid User email validation.
+ * @apiName Validation
+ * @apiGroup Authentication
+ *
+ * @apiParam {UUID} uid             User Uid.
+ * @apiParam {String} validation_uid  Email validation uid.
+ *
+ * @apiSuccess {String} username  Name of the logged in user.
+ * @apiSuccess {String} email     Email of the logged in user.
+ *
+ * @apiError (400 BadRequest) BadRequest Invalid input data.
+ * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
+ *
+ * @apiErrorExample {json} BadRequest
+ *  HTTP/1.1 409 Bad Request
+ *  {
+ *      "code": "BadRequest",
+ *      "message": "Invalid input data"
+ *  }
+ */
 router.patch({ path: `${authPath}/validate/:uid`, version: ['1.0.0'] },
     async (request, response, next) => {
         try {

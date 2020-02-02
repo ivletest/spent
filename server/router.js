@@ -1,7 +1,9 @@
 const authController = require("./controllers/auth.controller");
+const accountController = require("./controllers/account.controller");
 
 const router = [
-  authController
+  authController,
+  accountController
 ];
 
 module.exports = router;
