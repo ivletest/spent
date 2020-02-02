@@ -1,0 +1,9 @@
+{
+    "name": "spent",
+    "version": "1.0.0",
+    "description": "Spent app.",
+    "license": "MIT",
+    "template": {
+        "forceLanguage": "en"
+    }
+}

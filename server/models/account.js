@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         isPrivate: {
             type: DataTypes.BOOLEAN,
             allowNulls: false
-        }
+        },
+        balance: DataTypes.DECIMAL,
+        currency: DataTypes.TEXT
     }, {
         paranoid: true,
         underscored: true

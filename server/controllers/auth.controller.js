@@ -7,6 +7,36 @@ const userService = require("../services/user/user.service");
 const authPath = "/auth";
 
 // REGISTER
+/**
+ * @api {post} /auth/register   Registers new user.
+ * @apiName RegisterUser
+ * @apiGroup Authentication
+ *
+ * @apiParam {String} username  Longer than 2 characters required.
+ * @apiParam {String} email     Valid email required.
+ * @apiParam {String} password  Both upper and lower case letters and a number required.
+ *
+ * @apiSuccess {String} username  Name of the newly created user.
+ * @apiSuccess {String} email     Email of the newly created user.
+ *
+ * @apiError (400 BadRequest) BadRequest Invalid credentials.
+ * @apiError (409 Conflict) Conflict User already exists.
+ * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
+ *
+ * @apiSuccessExample  {json} Success
+ *  HTTP/1.1 200 OK
+ *  {
+ *     "username": "name",
+ *      "email": "mail@email.com"
+ *  }
+ *
+ * @apiErrorExample {json} Conflict
+ *  HTTP/1.1 409 Conflict
+ *  {
+ *      "code": "Conflict",
+ *      "message": "User already exists."
+ *  }
+ */
 router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
     async (request, response, next) => {
 
@@ -22,6 +52,34 @@ router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
     });
 
 // LOGIN
+/**
+ * @api {post} /auth/login User log in.
+ * @apiName Login
+ * @apiGroup Authentication
+ *
+ * @apiParam {String} email     User email.
+ * @apiParam {String} password  User password.
+ *
+ * @apiSuccess {String} username  Name of the logged in user.
+ * @apiSuccess {String} email     Email of the logged in user.
+ *
+ * @apiError (400 BadRequest) BadRequest Invalid credentials.
+ * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
+ *
+ * @apiSuccessExample  {json} Success
+ *  HTTP/1.1 200 OK
+ *  {
+ *     "username": "name",
+ *      "email": "mail@email.com"
+ *  }
+ *
+ * @apiErrorExample {json} BadRequest
+ *  HTTP/1.1 409 Bad Request
+ *  {
+ *      "code": "BadRequest",
+ *      "message": "Invalid credentials"
+ *  }
+ */
 router.post({ path: `${authPath}/login`, version: ['1.0.0'] },
     async (request, response, next) => {
 
@@ -43,8 +101,8 @@ router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
-            const user = mapInput.toLogoutUserModel(request);
-            await userService.logout(user);
+            const token = mapInput.toLogoutUserModel(request);
+            await userService.logout(token);
 
             response.send(204);
         } catch (error) {

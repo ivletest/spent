@@ -42,26 +42,20 @@ function toLoginUserModel(request) {
 
 function toLogoutUserModel(request) {
 
-    const email = request.body.email;
     const authToken = request.header("auth_token");
 
-    if (!email.isValidEmail() || !authToken) {
-        throw new errors.BadRequestError("User not authenticated.");
+    if (!authToken) {
+        throw new errors.BadRequestError("Invalid input data.");
     }
 
-    const logoutUserModel = {
-        email: email,
-        token: authToken
-    };
-
-    return logoutUserModel;
+    return authToken;
 }
 
 function toVerifyEmailModel(request) {
     const userUid = request.params.uid;
     const emailValidationUid = request.query.validation_uid;
 
-    if (!userUid || !emailValidationUid) {
+    if (!userUid.isValidUid() || !emailValidationUid.isValidUid()) {
         throw new errors.BadRequestError("Invalid input data");
     }
 
@@ -72,7 +66,6 @@ function toVerifyEmailModel(request) {
 
     return validateUserModel;
 }
-
 
 module.exports = {
     toRegisterUserModel,

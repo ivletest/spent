@@ -1,3 +1,4 @@
+'use strict'
 const db = require("../../models/index");
 const authService = require("../auth/auth.service");
 const errors = require("restify-errors");
@@ -7,7 +8,7 @@ async function authenticate(loginUser) {
     const user = await db.User.findOne({ where: { email: loginUser.email } });
 
     if (!user) {
-        throw new errors.BadRequestError("User does not exist.");
+        throw new errors.BadRequestError("Invalid credentials.");
     }
 
     const passwordMatch = await bcrypt.compare(
@@ -36,10 +37,10 @@ async function authorize(user) {
     return result;
 };
 
-async function logout(user) {
+async function logout(token) {
 
     await db.AuthToken.destroy({
-        where: { token: user.token }
+        where: { token: token }
     });
 };
 
