@@ -13,11 +13,10 @@ function toRegisterUserModel(request, role) {
         throw new errors.BadRequestError("Invalid input data.");
     }
 
-    const passwordHash = bcrypt.hashSync(password, 10);
     const registerUserModel = {
         username: username,
         email: email,
-        passwordHash: passwordHash,
+        password: password,
         role: role
     }
 
@@ -41,20 +40,24 @@ function toLoginUserModel(request) {
     return loginUserModel;
 }
 
-function toLogoutToken(request) {
+function toLogoutUserModel(request) {
 
-    const { email, cookies: { auth_token: authToken } } = request;
+    const email = request.body.email;
+    const authToken = request.header("auth_token");
 
     if (!email.isValidEmail() || !authToken) {
         throw new errors.BadRequestError("User not authenticated.");
     }
 
-    return authToken;
+    return {
+        email: email,
+        token: authToken
+    };
 }
 
 
 module.exports = {
     toRegisterUserModel,
     toLoginUserModel,
-    toLogoutToken
+    toLogoutUserModel
 }

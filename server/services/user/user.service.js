@@ -1,35 +1,58 @@
 const db = require("../../models/index");
+const authService = require("../auth/auth.service");
 const errors = require("restify-errors");
+const bcrypt = require("bcrypt");
 
 async function authenticate(loginUser) {
-    const user = User.findOne({ where: loginUser.email });
+    const user = await db.User.findOne({ where: { email: loginUser.email } });
 
-    if (bcrypt.compareSync(loginUser.password, user.password)) {
-        return await authorize(user);
+    if (!user) {
+        throw new errors.BadRequestError("User does not exist.");
     }
 
-    throw new errors.UnauthorizedError("Invalid credentials");
+    const passwordMatch = await bcrypt.compare(
+        loginUser.password,
+        user.passwordHash);
+
+    if (!passwordMatch) {
+        throw new errors.BadRequestError("Invalid credentials");
+    }
+
+    return await authorize(user);
 };
 
 async function authorize(user) {
-    const authToken = await db.AuthToken.generate(user.id);
+    const authToken = await authService.generateToken(user);
     await user.addAuthToken(authToken);
 
-    return { user, authToken };
+    const result = {
+        data: {
+            username: user.name,
+            email: user.email,
+        },
+        token: authToken.token
+    }
+
+    return result;
 };
 
-async function logout(token) {
-    await db.AuthToken.destroy({ where: { token } });
+async function logout(user) {
+
+    await db.AuthToken.destroy({
+        where: { token: user.token }
+    });
 };
 
 async function create(registerUser) {
+
     let result;
+    const passwordHash = await bcrypt.hash(registerUser.password, 10);
 
     await db.User.findOrCreate({
         where: { email: registerUser.email },
         defaults: {
             name: registerUser.username,
-            passwordHash: registerUser.passwordHash,
+            passwordHash: passwordHash,
             email: registerUser.email,
             role: registerUser.role
         }
@@ -39,14 +62,9 @@ async function create(registerUser) {
             throw new errors.ConflictError("User already exists.");
         }
 
-        const data = await authorize(user);
         result = {
-            token: data.authToken.token,
-            uid: data.authToken.uid,
-            data: {
-                username: data.user.name,
-                email: data.user.email
-            }
+            username: user.name,
+            email: user.email
         }
     });
 

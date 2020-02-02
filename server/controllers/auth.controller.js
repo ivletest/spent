@@ -27,10 +27,12 @@ router.post({ path: "/login", version: ['1.0.0'] },
 
         try {
             const user = mapInput.toLoginUserModel(request);
-            const authenticatedUser = db.User.authenticate(user);
-            response.send(201, authenticatedUser);
+            const authenticatedUser = await userService.authenticate(user);
+
+            response.header("auth_token", authenticatedUser.token);
+            response.send(200, authenticatedUser.data);
         } catch (error) {
-            response.send(500, error);
+            response.send(error);
         }
 
         next();
@@ -41,10 +43,12 @@ router.del({ path: "/logout", version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
-            const token = mapInput.toLogoutToken(request);
-            await request.user.logout(token);
+            const user = mapInput.toLogoutUserModel(request);
+            await userService.logout(user);
+
+            response.send(204);
         } catch (error) {
-            return response.send(204);
+            response.send(error);
         }
     });
 

@@ -13,20 +13,5 @@ module.exports = (sequelize, DataTypes) => {
         AuthToken.belongsTo(models.User);
     };
 
-    AuthToken.generate = async function (userUid) {
-        if (!userUid) {
-            throw new Error("Auth token requires user id.");
-        }
-
-        let token = "";
-
-        for (let i = 0; i < 15; i++) {
-            token += characters.charAt(
-                Math.floor(Math.random() * characters.length));
-        }
-
-        return AuthToken.create({ token, userUid });
-    }
-
     return AuthToken;
 };

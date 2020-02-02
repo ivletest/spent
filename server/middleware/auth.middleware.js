@@ -1,19 +1,20 @@
 'use strict';
 const db = require("../models/index");
 
-module.exports = async function (req, res, next) {
-    const token = req.cookies.auth_token || req.headers.authorization;
+module.exports = async function (request, response, next) {
+
+    const token = request.header("auth_token");
 
     if (token) {
-        const authToken = await db.AuthToken.find({
+        const authToken = await db.AuthToken.findOne({
             where: { token },
             include: db.User
         });
 
         if (authToken) {
-            req.user = authToken.User;
+            request.user = authToken.User;
         }
     }
-    
+
     next();
 }
