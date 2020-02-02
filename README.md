@@ -1,7 +1,7 @@
 # spent
 
 ## Yarn
-The repo is using Yarn workspaces, so you must install yarn.
+The repo is using Yarn workspaces, so you must use yarn.
 
 ## Environment file
 In the server folder put .env file formatted like
