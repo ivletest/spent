@@ -1,15 +1,16 @@
 'use strict';
 require("../validation.service");
 const bcrypt = require("bcrypt");
-const db = require("../../models/index");
+const errors = require("restify-errors");
 
 function toRegisterUserModel(request, role) {
+
     const { username, email, password } = request.body;
 
-    if (!username.isValidUsername ||
-        !email.isValidEmail ||
-        !password.isValidPassword) {
-        throw new Error("Invalid input data.");
+    if (!username.isValidUsername() ||
+        !email.isValidEmail()       ||
+        !password.isValidPassword()) {
+        throw new errors.BadRequestError("Invalid input data.");
     }
 
     const passwordHash = bcrypt.hashSync(password, 10);
@@ -24,11 +25,12 @@ function toRegisterUserModel(request, role) {
 }
 
 function toLoginUserModel(request) {
+
     const { email, password } = request.body;
 
-    if (!email.isValidEmail ||
-        !password.isValidPassword) {
-        throw new Error("Invalid input data.");
+    if (!email.isValidEmail() ||
+        !password.isValidPassword()) {
+        throw new errors.BadRequestError("Invalid input data.");
     }
 
     const loginUserModel = {
@@ -39,9 +41,20 @@ function toLoginUserModel(request) {
     return loginUserModel;
 }
 
+function toLogoutToken(request) {
+
+    const { email, cookies: { auth_token: authToken } } = request;
+
+    if (!email.isValidEmail() || !authToken) {
+        throw new errors.BadRequestError("User not authenticated.");
+    }
+
+    return authToken;
+}
 
 
 module.exports = {
     toRegisterUserModel,
-    toLoginUserModel
+    toLoginUserModel,
+    toLogoutToken
 }

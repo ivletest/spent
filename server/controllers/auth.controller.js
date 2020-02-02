@@ -9,42 +9,43 @@ const errors = require("restify-errors");
 // REGISTER
 router.post({ path: "/register", version: ['1.0.0'] },
     async (request, response, next) => {
-        const user = mapInput.toRegisterUserModel(request, "user");
+
         try {
+            const user = mapInput.toRegisterUserModel(request, "user");
             let result = await userService.create(user);
             response.send(201, result);
         } catch (error) {
             response.send(error);
         }
+
         next();
     });
 
 // LOGIN
 router.post({ path: "/login", version: ['1.0.0'] },
     async (request, response, next) => {
-        const user = mapInput.toLoginUserModel(request);
+
         try {
-            const user = db.User.authenticate(user);
-            response.send(201, user);
+            const user = mapInput.toLoginUserModel(request);
+            const authenticatedUser = db.User.authenticate(user);
+            response.send(201, authenticatedUser);
         } catch (error) {
-            response.send(500, err);
+            response.send(500, error);
         }
+
         next();
     });
 
 // LOGOUT
 router.del({ path: "/logout", version: ['1.0.0'] },
     async (request, response, next) => {
-        const { user, cookies: { auth_token: authToken } } = request;
 
-        if (!user || !authToken) {
-            return response.send(400, {
-                errors: [{ message: "User not authenticated." }]
-            });
+        try {
+            const token = mapInput.toLogoutToken(request);
+            await request.user.logout(token);
+        } catch (error) {
+            return response.send(204);
         }
-
-        await request.user.logout(authToken);
-        return response.send(204);
     });
 
 module.exports = router;

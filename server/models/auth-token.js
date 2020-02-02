@@ -1,5 +1,4 @@
 'use strict';
-const Sequelize = require("sequelize");
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 module.exports = (sequelize, DataTypes) => {

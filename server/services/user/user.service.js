@@ -8,7 +8,7 @@ async function authenticate(loginUser) {
         return await authorize(user);
     }
 
-    throw new errors.UnauthorizedError();
+    throw new errors.UnauthorizedError("Invalid credentials");
 };
 
 async function authorize(user) {
@@ -19,7 +19,7 @@ async function authorize(user) {
 };
 
 async function logout(token) {
-    db.AuthToken.destroy({ where: { token } });
+    await db.AuthToken.destroy({ where: { token } });
 };
 
 async function create(registerUser) {
@@ -39,18 +39,14 @@ async function create(registerUser) {
             throw new errors.ConflictError("User already exists.");
         }
 
-        try {
-            const data = await authorize(user);
-            result = {
-                token: data.authToken.token,
-                uid: data.authToken.uid,
-                data: {
-                    username: data.user.name,
-                    email: data.user.email
-                }
+        const data = await authorize(user);
+        result = {
+            token: data.authToken.token,
+            uid: data.authToken.uid,
+            data: {
+                username: data.user.name,
+                email: data.user.email
             }
-        } catch (error) {
-            throw new errors.InternalServerError(`Error authorizing user. ${error}`);
         }
     });
 
