@@ -22,3 +22,8 @@ String.prototype.isValidUid = function() {
     const value = String(this);
     return uidValidation.test(value);
 }
+
+String.prototype.isValidBoolean = function() {
+    const value = String(this).trim().toLowerCase();
+    return value === "true" || value === "false";
+}

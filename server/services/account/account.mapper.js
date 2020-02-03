@@ -6,17 +6,24 @@ function toCreateAccountModel(request) {
     const userUid = request.params.uid;
     const { isPrivate, balance, currency, parentAccountUid } = request.body;
 
-    if (!userUid.isValidUid() ||
-        !isPrivate ||
-        !balance ||
-        !currency) {
+    const userIsValid = userUid.isValidUid();
+    const isPrivateIsValid = isPrivate.isValidBoolean();
+    const balanceIsValid = !isNaN(balance);
+    const currencyIsValid = currency.trim().length === 3;
+    const parentAccountIsValid = parentAccountUid ? parentAccountUid.userUid.isValidUid() : true;
+
+    if (!userIsValid ||
+        !isPrivateIsValid ||
+        !balanceIsValid ||
+        !currencyIsValid ||
+        !parentAccountIsValid) {
             throw new errors.BadRequestError("Invalid input data");
     }
 
     const accountData = {
         userUid: userUid,
-        isPrivate: isPrivate,
-        balance: balance,
+        isPrivate: Boolean(isPrivate),
+        balance: Number(balance),
         currency: currency,
         parentAccountUid: parentAccountUid
     }

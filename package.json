@@ -13,7 +13,7 @@
 
     },
     "scripts": {
-        "server": "cross-env NODE_ENV=development nodemon ./server/index.js",
+        "server:dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
         "generate:api-docs": "apidoc -i ./server/controllers/ -o doc/api/"
     }
 }

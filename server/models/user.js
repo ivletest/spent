@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = function (models) {
         User.hasMany(models.AuthToken);
+        User.belongsToMany(models.Account, { through: "user_accounts" });
     };
 
     return User;
