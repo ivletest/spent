@@ -7,7 +7,7 @@ const authMiddleware = require("./middleware/auth.middleware");
 const db = require("./models");
 
 global.staticFolder = `${path.resolve(__dirname)}/www`;
-const port = Number(process.env.PORT || 3000);
+const port = Number(process.env.PORT) || 3000;
 
 // Create Server
 global.server = restify.createServer({
@@ -26,7 +26,7 @@ server.use(restify.plugins.bodyParser({
 }));
 
 //Sync Database
-db.sequelize.sync({ force: true });
+db.sequelize.sync({ force: false });
 
 if (process.env.NODE_ENV !== "production") {
     childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {

@@ -31,8 +31,8 @@ yarn install
 ### Environment file
 Place `.env` file in the root of the repository and format it like:
 ```
-APP_HOST= application host
-APP_PORT= application port
+HOST= application host
+PORT= application port
 
 DATABASE_HOST= database host
 DATABASE_NAME= database name
