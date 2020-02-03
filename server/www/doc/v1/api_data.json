@@ -1,7 +1,7 @@
 [
   {
     "type": "post",
-    "url": "/:uid/account/create",
+    "url": "/:uid/accounts/create",
     "title": "Create new finantial account.",
     "name": "CreateAccount",
     "group": "Account",
@@ -51,24 +51,24 @@
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "UUID",
             "optional": false,
-            "field": "username",
-            "description": "<p>Name of the logged in user.</p>"
+            "field": "uid",
+            "description": "<p>Uid of the account.</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "email",
-            "description": "<p>Email of the logged in user.</p>"
+            "field": "currency",
+            "description": "<p>Account currency.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success",
-          "content": "HTTP/1.1 200 OK\n{\n   \"username\": \"name\",\n    \"email\": \"mail@email.com\"\n}",
+          "content": "HTTP/1.1 201 Created\n{\n    \"uid\": \"a3ed181c-3519-4bc0-9889-be9ee9069006\",\n    \"isPrivate\": true,\n    \"balance\": \"200\",\n    \"currency\": \"mkd\"\n}",
           "type": "json"
         }
       ]
@@ -80,7 +80,7 @@
             "group": "400 BadRequest",
             "optional": false,
             "field": "BadRequest",
-            "description": "<p>Invalid credentials.</p>"
+            "description": "<p>User does not exist.</p>"
           }
         ],
         "500 InternalServerError": [
@@ -95,7 +95,98 @@
       "examples": [
         {
           "title": "BadRequest",
-          "content": "HTTP/1.1 409 Bad Request\n{\n    \"code\": \"BadRequest\",\n    \"message\": \"Invalid credentials\"\n}",
+          "content": "HTTP/1.1 409 Bad Request\n{\n    \"code\": \"BadRequest\",\n    \"message\": \"User does not exist.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "server/controllers/account.controller.js",
+    "groupTitle": "Account"
+  },
+  {
+    "type": "get",
+    "url": "/:uid/accounts",
+    "title": "Gets all finantial accounts for user.",
+    "name": "GetAllAccounts",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "UUID",
+            "optional": false,
+            "field": "userUid",
+            "description": "<p>User uid.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "isPrivate",
+            "description": "<p>Tells if the account is private.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "balance",
+            "description": "<p>Account balance.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "UUID",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>Uid of the account.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "currency",
+            "description": "<p>Account currency.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 201 Created\n{\n    \"uid\": \"a3ed181c-3519-4bc0-9889-be9ee9069006\",\n    \"isPrivate\": true,\n    \"balance\": \"200\",\n    \"currency\": \"mkd\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "400 BadRequest": [
+          {
+            "group": "400 BadRequest",
+            "optional": false,
+            "field": "BadRequest",
+            "description": "<p>User does not exist.</p>"
+          }
+        ],
+        "500 InternalServerError": [
+          {
+            "group": "500 InternalServerError",
+            "optional": false,
+            "field": "InternalServerError",
+            "description": "<p>The server encountered an internal error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "BadRequest",
+          "content": "HTTP/1.1 409 Bad Request\n{\n    \"code\": \"BadRequest\",\n    \"message\": \"User does not exist.\"\n}",
           "type": "json"
         }
       ]
@@ -293,7 +384,7 @@
       "examples": [
         {
           "title": "Success",
-          "content": "HTTP/1.1 200 OK\n{\n   \"username\": \"name\",\n    \"email\": \"mail@email.com\"\n}",
+          "content": "HTTP/1.1 201 Created\n{\n   \"username\": \"name\",\n    \"email\": \"mail@email.com\"\n}",
           "type": "json"
         }
       ]

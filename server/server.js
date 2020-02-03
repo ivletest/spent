@@ -1,10 +1,12 @@
 'use strict';
 require("dotenv").config();
+const path = require("path");
 const childProcess = require("child_process");
 const restify = require("restify");
 const authMiddleware = require("./middleware/auth.middleware");
 const db = require("./models");
 
+global.staticFolder = `${path.resolve(__dirname)}/www`;
 const port = Number(process.env.APP_PORT);
 
 // Create Server
