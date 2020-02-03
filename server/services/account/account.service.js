@@ -13,6 +13,7 @@ async function create(accountData) {
         isPrivate: accountData.isPrivate,
         balance: accountData.balance,
         currency: accountData.currency,
+        parentAccountId: accountData.parentAccountUid
     });
 
     user.addAccount(account);

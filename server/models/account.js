@@ -22,7 +22,11 @@ module.exports = (sequelize, DataTypes) => {
 
     Account.associate = function (models) {
         Account.belongsToMany(models.User, { through: "user_accounts" });
-        Account.belongsTo(models.Account, { as: "parent_account" });
+        Account.belongsTo(models.Account, {
+            foreignKey: "parent_account_uid",
+            targetKey: "uid",
+            type: DataTypes.UUID
+        });
 
         Account.hasMany(models.Income, { as: "incomes" });
         Account.hasMany(models.Expense, { as: "expenses" });

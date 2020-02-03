@@ -16,14 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         displayOrder: {
             type: DataTypes.INTEGER,
             allowNulls: false
-        }
+        },
     }, {
         paranoid: true,
         underscored: true
     });
 
     ProductCategory.associate = function (models) {
-        ProductCategory.belongsTo(models.ProductCategory, { as: "parent_category" });
+        ProductCategory.belongsTo(models.ProductCategory, {
+            foreignKey: "parent_category_uid",
+            targetKey: "uid",
+            type: DataTypes.UUID
+        });
         ProductCategory.hasMany(models.Expense);
     };
 
