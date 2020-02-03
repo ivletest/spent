@@ -24,7 +24,7 @@ const authPath = "/auth";
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
  * @apiSuccessExample  {json} Success
- *  HTTP/1.1 200 OK
+ *  HTTP/1.1 201 Created
  *  {
  *     "username": "name",
  *      "email": "mail@email.com"

@@ -13,19 +13,28 @@ async function create(accountData) {
         isPrivate: accountData.isPrivate,
         balance: accountData.balance,
         currency: accountData.currency,
-        parentAccountId: accountData.parentAccountUid
+        parentAccountUid: accountData.parentAccountUid
     });
 
     user.addAccount(account);
-    return account;
+
+    const accountResponse = {
+        uid: account.uid,
+        isPrivate: account.isPrivate,
+        balance: account.balance,
+        currency: account.currency,
+        parentAccountUid: account.parentAccountUid
+    }
+
+    return accountResponse;
 }
 
-async function getAllAccounts(user) {
+async function getAllAccounts(userUid) {
     const accounts = db.Accounts.findAll({
         attributes: ["uid", "is_private", "parent_account_id", "balance"],
         include: [{
             model: db.User,
-            where: { uid: user.uid }
+            where: { uid: userUid }
         }]
     });
 

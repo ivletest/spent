@@ -31,6 +31,17 @@ function toCreateAccountModel(request) {
     return accountData;
 }
 
+function toGetAllAccountsModel(request) {
+    const userUid = request.params.uid;
+
+    if (!userUid.isValidUid()) {
+        throw new errors.BadRequestError("Invalid input data");
+    }
+
+    return userUid;
+}
+
 module.exports = {
-    toCreateAccountModel
+    toCreateAccountModel,
+    toGetAllAccountsModel
 }
