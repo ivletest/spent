@@ -7,13 +7,13 @@ const authMiddleware = require("./middleware/auth.middleware");
 const db = require("./models");
 
 global.staticFolder = `${path.resolve(__dirname)}/www`;
-const port = Number(process.env.APP_PORT);
+const port = Number(process.env.PORT || 3000);
 
 // Create Server
 global.server = restify.createServer({
     name: "Spent API",
     version: "1.0.0",
-    url: process.env.APP_HOST
+    url: process.env.HOST
 });
 
 // Configure Middleware

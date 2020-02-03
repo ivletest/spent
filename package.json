@@ -11,7 +11,7 @@
     ],
     "resolutions": {},
     "scripts": {
-        "server:dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
-        "doc:api": "apidoc -i ./server/controllers/ -o ./server/www/doc/v1/"
+        "server:dev": "cd server && cross-env NODE_ENV=development nodemon ./index.js",
+        "doc:api": "cd server && apidoc -i ./controllers/ -o ./www/doc/v1/"
     }
 }

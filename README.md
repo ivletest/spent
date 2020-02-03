@@ -8,7 +8,7 @@
 ## Technologies
     * Yarn ^1.0
     * NodeJs ^12.14
-    * PostgreSQL ^11.6 
+    * PostgreSQL ^11.6
     * Sequelize ^5.21
     * Restify ^8.5
     * Ionic Framework ^5.4
@@ -34,11 +34,11 @@ Place `.env` file in the root of the repository and format it like:
 APP_HOST= application host
 APP_PORT= application port
 
-PG_HOST= database host
-PG_DB= database name
-PG_PORT= database port
-PG_USER= postgres user
-PG_PASS= postgres password
+DATABASE_HOST= database host
+DATABASE_NAME= database name
+DATABASE_PORT= database port
+DATABASE_USER= postgres user
+DATABASE_PASS= postgres password
 ```
 
 ### Running the project

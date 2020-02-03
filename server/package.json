@@ -4,9 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "generate:docs": "apidoc -i controllers/ -o doc/",
-        "dev": "cross-env NODE_ENV=development nodemon ./index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node index.js"
     },
     "keywords": [],
     "author": "Ivan",
