@@ -64,7 +64,7 @@ async function create(registerUser) {
         }
 
         const emailValidationUrl =
-            `${process.env.APP_HOST}/auth/validate/${user.uid}?validation_uid=${user.emailValidationUid}`;
+            `${process.env.HOST}/auth/validate/${user.uid}?validation_uid=${user.emailValidationUid}`;
 
         result = {
             username: user.name,

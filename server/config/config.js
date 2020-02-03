@@ -2,11 +2,11 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    username: process.env.PG_USER,
-    password: process.env.PG_PASS,
-    database: process.env.PG_DB,
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
     dialect: "postgres",
     operatorsAliases: 0,
     pool: {
@@ -17,11 +17,11 @@ module.exports = {
     }
   },
   test: {
-    username: process.env.PG_USER,
-    password: process.env.PG_PASS,
-    database: process.env.PG_DB,
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
     dialect: "postgres",
     operatorsAliases: 0,
     pool: {
@@ -32,11 +32,11 @@ module.exports = {
     }
   },
   production: {
-    username: process.env.PG_USER,
-    password: process.env.PG_PASS,
-    database: process.env.PG_DB,
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
     dialect: "postgres",
     operatorsAliases: 0,
     pool: {
