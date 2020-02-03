@@ -8,7 +8,7 @@ const authPath = "/auth";
 
 // REGISTER
 /**
- * @api {post} /auth/register   Registers new user.
+ * @api {post} /auth/register   User registration.
  * @apiName RegisterUser
  * @apiGroup Authentication
  *
@@ -53,7 +53,7 @@ router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
 
 // LOGIN
 /**
- * @api {post} /auth/login User log in.
+ * @api {post} /auth/login User login.
  * @apiName Login
  * @apiGroup Authentication
  *
@@ -96,9 +96,14 @@ router.post({ path: `${authPath}/login`, version: ['1.0.0'] },
         next();
     });
 
+// Redirects
+router.post(authPath, (request, response, next) => {
+    response.redirect(302,`${authPath}/login`, next);
+});
+
 // LOGOUT
 /**
- * @api {delete} /auth/logout User log out.
+ * @api {delete} /auth/logout User logout.
  * @apiName Logout
  * @apiGroup Authentication
  *
@@ -127,9 +132,14 @@ router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
         }
     });
 
+// Redirects
+router.del(authPath, (request, response, next) => {
+    response.redirect(302,`${authPath}/logout`, next);
+});
+
 // VALIDATE
 /**
- * @api {patch} /auth/validate/:uid?validation_uid=:uid User email validation.
+ * @api {patch} /auth/validate/:uid?validation_uid=:uid Email validation.
  * @apiName Validation
  * @apiGroup Authentication
  *
@@ -157,7 +167,7 @@ router.patch({ path: `${authPath}/validate/:uid`, version: ['1.0.0'] },
 
             response.send(204);
 
-        } catch(error) {
+        } catch (error) {
             response.send(error);
         }
     });

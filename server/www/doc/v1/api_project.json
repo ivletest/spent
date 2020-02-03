@@ -1,7 +1,7 @@
-define({
-  "name": "spent",
+{
+  "name": "Spent",
   "version": "1.0.0",
-  "description": "Spent app.",
+  "description": "Api V1 documentation.",
   "license": "MIT",
   "template": {
     "forceLanguage": "en"
@@ -11,8 +11,8 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-02-02T23:41:21.412Z",
+    "time": "2020-02-03T15:26:44.522Z",
     "url": "http://apidocjs.com",
     "version": "0.20.0"
   }
-});
+}

@@ -1,7 +1,7 @@
 {
-    "name": "spent",
+    "name": "Spent",
     "version": "1.0.0",
-    "description": "Spent app.",
+    "description": "Api V1 documentation.",
     "license": "MIT",
     "template": {
         "forceLanguage": "en"

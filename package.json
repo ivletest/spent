@@ -9,11 +9,9 @@
         "app",
         "server"
     ],
-    "resolutions": {
-
-    },
+    "resolutions": {},
     "scripts": {
         "server:dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
-        "generate:api-docs": "apidoc -i ./server/controllers/ -o doc/api/"
+        "doc:api": "apidoc -i ./server/controllers/ -o ./server/www/doc/v1/"
     }
 }

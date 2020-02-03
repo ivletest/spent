@@ -7,9 +7,9 @@ const accountService = require("../services/account/account.service");
 const accountPath = "/:uid/accounts";
 // CREATE ACCOUNT
 /**
- * @api {post} /:uid/accounts/create Create new finantial account.
+ * @api {post} /:uid/accounts/create Create account.
  * @apiName CreateAccount
- * @apiGroup Account
+ * @apiGroup Financial
  *
  * @apiParam {UUID} userUid   User uid.
  * @apiParam {Boolean} isPrivate  Sets account to private.
@@ -56,9 +56,9 @@ router.post({ path: `${accountPath}/create`, version: ['1.0.0'] },
 
 // GET ALL ACCOUNTS
 /**
- * @api {get} /:uid/accounts Gets all finantial accounts for user.
+ * @api {get} /:uid/accounts Get all accounts.
  * @apiName GetAllAccounts
- * @apiGroup Account
+ * @apiGroup Financial
  *
  * @apiParam {UUID} userUid   User uid.
  *
