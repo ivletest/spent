@@ -26,9 +26,11 @@ server.use(restify.plugins.bodyParser({
 }));
 
 //Sync Database
-db.sequelize.sync({ force: false });
+const isDevelopment = process.env.NODE_ENV !== "production";
 
-if (process.env.NODE_ENV !== "production") {
+db.sequelize.sync({ force: isDevelopment });
+
+if (isDevelopment) {
     childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
         if (error) {
             console.log(`exec error: ${error}`);
