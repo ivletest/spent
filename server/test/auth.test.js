@@ -1,22 +1,26 @@
-const supertest = require("supertest");
-const should = require("should");
+const restify = require("restify-clients");
 
-const server = supertest.agent(`${process.env.HOST}:${process.env.PORT}`);
+const client = restify.createJsonClient({
+    version: "*",
+    url: `${process.env.HOST}:${process.env.PORT}`
+})
 
-describe("Register user success test", (done) => {
-    it("Should return status 201 and username and email in the body", 
-    (done) => {
-        server.post("/auth/register")
-            .send({ 
-                uername: "test user", 
-                email: "test@email.com", 
-                password: "Testpass0"})
-            .expect(201)
-            .end((error, response) => {
-                response.status.should.equal(201);
-                response.body.should.equal({ 
-                    username: "test user",
-                    email: "test@email.com"});
+describe("Register user test", () => {
+    it("Should return status 201", (done) => {
+        client.post("/auth/register", {
+            uername: "test user",
+            email: "test@email.com",
+            password: "Testpass0"
+        },
+            (error, request, response, data) => {
+                if (error) {
+                    throw new Error(error);
+                }
+
+                if (data.code !== 201) {
+                    throw new Error("Invlid response code.");
+                }
+
                 done();
             });
     });
