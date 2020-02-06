@@ -12,6 +12,7 @@
     "resolutions": {},
     "scripts": {
         "server:dev": "cd server && cross-env NODE_ENV=development nodemon ./index.js",
-        "doc:api": "cd server && apidoc -i ./controllers/ -o ./www/doc/v1/"
+        "doc:api": "cd server && apidoc -i ./controllers/ -o ./www/doc/v1/",
+        "test": "mocha ./server/test/*.js --recursive --timeout 10000"
     }
 }
