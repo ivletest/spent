@@ -18,7 +18,7 @@ module.exports = {
             currency: "mkd",
             created_at: new Date(),
             updated_at: new Date(),
-            parent_account_uid: "ca5cb211-494d-4174-853f-e70a148c2b33"
+            parent_account_uid: "60ce244f-2397-477d-a61c-8df5a43bb251"
         }]);
     },
 
