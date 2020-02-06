@@ -8,13 +8,15 @@ const authMiddleware = require("./middleware/auth.middleware");
 const db = require("./models/index");
 
 global.staticFolder = `${path.resolve(__dirname)}/www`;
+
 const port = Number(process.env.PORT) || 3000;
+const isDevelopment = process.env.NODE_ENV === "development";
 
 //Sync Database
-
 if (process.env.NODE_ENV !== "test") {
-    const isDevelopment = process.env.NODE_ENV === "development";
-    db.sequelize.sync({ force: isDevelopment });
+    db.sequelize.sync({
+        force: isDevelopment
+    });
     
     if (isDevelopment) {
         childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
@@ -31,14 +33,14 @@ if (process.env.NODE_ENV !== "test") {
 global.server = restify.createServer({
     name: "Spent API",
     version: "1.0.0",
-    url: process.env.HOST
+    url: process.env.HOST    
 });
 
 // Configure Middleware
 if (process.env.NODE_ENV !== "test") {
     server.use(morgan("combined"));
 }
-
+server.pre(restify.pre.sanitizePath());
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser({
     mapParams: true,
