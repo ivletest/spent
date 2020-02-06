@@ -15,6 +15,10 @@
     * Apidoc ^0.20
 ## Setup
 
+## PosgreSQL
+Download and install [PostgreSQL](https://www.postgresql.org/download/)
+There is a lot of information on the internet on how to configure PostgreSQL.
+
 ### Yarn
 The repo is using Yarn workspaces, which is available since Yarn 1.0.
 **NOTE: ** Since NPM doesn't support workspaces, you must use Yarn.
@@ -49,4 +53,4 @@ Run: `yarn run server:dev` to start development server. The database migrations
 and seeding wil run automaticly when the server starts.
 
 ## Documentation
-Link: [Api Documentation V1](localhost:3000/doc/v1).
+Link: [Api Documentation V1](https://spent-api.herokuapp.com/doc/v1/).
