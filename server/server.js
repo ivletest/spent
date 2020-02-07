@@ -29,23 +29,6 @@ if (process.env.NODE_ENV !== "test") {
     }
 }
 
-//Sync Database
-
-if (process.env.NODE_ENV !== "test") {
-    const isDevelopment = process.env.NODE_ENV === "development";
-    db.sequelize.sync({ force: isDevelopment });
-    
-    if (isDevelopment) {
-        childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
-            if (error) {
-                console.log(`exec error: ${error}`);
-            }
-            console.log(stdout);
-            console.log(stderr);
-        });
-    }
-}
-
 // Create Server
 global.server = restify.createServer({
     name: "Spent API",
