@@ -5,7 +5,9 @@ const errors = require("restify-errors");
 const bcrypt = require("bcrypt");
 
 async function authenticate(loginUser) {
-    const user = await db.User.findOne({ where: { email: loginUser.email } });
+    const user = await db.User.findOne({
+        where: { email: loginUser.email } 
+    });
 
     if (!user) {
         throw new errors.BadRequestError("Invalid credentials.");

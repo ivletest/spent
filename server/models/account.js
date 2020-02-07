@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true,
         underscored: true,
         indexes: [
-            
+            { fields: ["id"], unique: true },
+            { fields: ["uid"], unique: true },
+            { fields: ["id", "parent_account_id"] }
         ]
     });
 

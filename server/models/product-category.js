@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         paranoid: true,
-        underscored: true
+        underscored: true,
+        indexes: [
+            { fields: ["id"], unique: true },
+            { fields: ["uid"], unique: true },
+        ]
     });
 
     ProductCategory.associate = function (models) {

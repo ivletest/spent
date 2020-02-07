@@ -41,7 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         paranoid: true,
-        underscored: true
+        underscored: true,
+        indexes: [
+            { fields: ["id"], unique: true },
+            { fields: ["uid"], unique: true },
+            { fields: ["email"], unique: true },
+            { fields: ["email", "email_is_valid"]},
+            { fields: ["uid","name", "email", "password_hash"]}
+        ]
     });
 
     User.associate = function (models) {

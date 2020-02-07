@@ -15,7 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         paranoid: true,
-        underscored: true
+        underscored: true,
+        indexes: [
+            { fields: ["id"], unique: true },
+            { fields: ["uid"], unique: true },
+            { fields: ["account_id"], unique: true},
+            { fields: ["amount", "account_id"], unique: true}
+        ]
     });
 
     Income.associate = function (models) {
