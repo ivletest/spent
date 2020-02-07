@@ -1,10 +1,12 @@
 require("../index");
-const server = require("../server").server;
+// const server = require("../server").server;
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
 chai.use(chaiHttp);
 chai.should();
+
+const url = `${process.env.HOST}:${process.env.PORT}`;
 
 // User data
 const userName = "Test user."
@@ -21,7 +23,7 @@ describe("/POST auth/register", () => {
             password: userPassword
         }
 
-        chai.request(server.url)
+        chai.request(url)
             .post("/auth/register")
             .set('content-type', 'application/x-www-form-urlencoded')
             .send(registerUserRequest)
@@ -42,7 +44,7 @@ describe("/POST auth/register", () => {
             password: userPassword
         }
 
-        chai.request(server.url)
+        chai.request(url)
             .post("/auth/register")
             .set('content-type', 'application/x-www-form-urlencoded')
             .send(registerUserRequest)
@@ -64,7 +66,7 @@ describe("/POST auth/login", () => {
             password: userPassword
         }
 
-        chai.request(server.url)
+        chai.request(url)
             .post("/auth/login")
             .set('content-type', 'application/x-www-form-urlencoded')
             .send(loginUserRequest)

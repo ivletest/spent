@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         currency: DataTypes.TEXT
     }, {
         paranoid: true,
-        underscored: true
+        underscored: true,
+        indexes: [
+            
+        ]
     });
 
     Account.associate = function (models) {
