@@ -30,6 +30,7 @@ async function authorize(user) {
 
     const result = {
         data: {
+            uid: user.uid,
             username: user.name,
             email: user.email,
         },

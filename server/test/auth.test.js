@@ -224,6 +224,10 @@ describe("/POST auth/login", () => {
     });
 });
 
+describe("/DELETE auth/logout", () => {
+
+});
+
 module.exports = {
     token
 };
