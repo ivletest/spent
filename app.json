@@ -9,6 +9,12 @@
             "url": "https://github.com/blockhq/heroku-buildpack-yarn-workspaces#master"
         }
     ],
+    "env": {
+        "APP_ROOT": {
+            "description": "root folder of the server workspace",
+            "value": "server"
+        }
+    },
     "environments": {
         "test": {
             "addons": [
