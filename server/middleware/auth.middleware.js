@@ -8,7 +8,10 @@ module.exports = async function (request, response, next) {
     if (token) {
         const authToken = await db.AuthToken.findOne({
             where: { token },
-            include: db.User
+            include: [{
+                model: db.User,
+                as: "user"
+            }]
         });
 
         if (authToken) {

@@ -1,5 +1,6 @@
 'use strict';
 require("../validation.service");
+const messages = require("../../common/messages");
 const bcrypt = require("bcrypt");
 const errors = require("restify-errors");
 
@@ -10,7 +11,7 @@ function toRegisterUserModel(request, role) {
     if (!username.isValidUsername() ||
         !email.isValidEmail()       ||
         !password.isValidPassword()) {
-        throw new errors.BadRequestError("Invalid input data.");
+        throw new errors.BadRequestError(messages.invalidInputData);
     }
 
     const registerUserModel = {
@@ -29,7 +30,7 @@ function toLoginUserModel(request) {
 
     if (!email.isValidEmail() ||
         !password.isValidPassword()) {
-        throw new errors.BadRequestError("Invalid input data.");
+        throw new errors.BadRequestError(messages.invalidInputData);
     }
 
     const loginUserModel = {
@@ -45,7 +46,7 @@ function toLogoutUserModel(request) {
     const authToken = request.header("auth_token");
 
     if (!authToken) {
-        throw new errors.BadRequestError("Invalid input data.");
+        throw new errors.BadRequestError(messages.invalidInputData);
     }
 
     return authToken;
@@ -56,7 +57,7 @@ function toVerifyEmailModel(request) {
     const emailValidationUid = request.query.validation_uid;
 
     if (!userUid.isValidUid() || !emailValidationUid.isValidUid()) {
-        throw new errors.BadRequestError("Invalid input data");
+        throw new errors.BadRequestError(messages.invalidInputData);
     }
 
     const validateUserModel = {

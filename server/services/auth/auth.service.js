@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 async function generateToken(user) {
     if (!user) {
-        throw new Error("Auth token requires user id.");
+        throw new errors.InternalServerError("Auth token requires user id.");
     }
 
     const token = await bcrypt.hash(user.email, 2);

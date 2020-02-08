@@ -3,12 +3,15 @@ const db = require("../../models/index");
 const authService = require("../auth/auth.service");
 const errors = require("restify-errors");
 const bcrypt = require("bcrypt");
+const messages = require("../../common/messages");
 
 async function authenticate(loginUser) {
-    const user = await db.User.findOne({ where: { email: loginUser.email } });
+    const user = await db.User.findOne({
+        where: { email: loginUser.email }
+    });
 
     if (!user) {
-        throw new errors.BadRequestError("Invalid credentials.");
+        throw new errors.UnauthorizedError(messages.invalidCredentials);
     }
 
     const passwordMatch = await bcrypt.compare(
@@ -16,18 +19,26 @@ async function authenticate(loginUser) {
         user.passwordHash);
 
     if (!passwordMatch) {
-        throw new errors.BadRequestError("Invalid credentials");
+        throw new errors.UnauthorizedError(messages.invalidCredentials);
     }
 
     return await authorize(user);
 };
 
 async function authorize(user) {
-    const authToken = await authService.generateToken(user);
-    await user.addAuthToken(authToken);
+
+    let authToken;
+
+    try {
+        authToken = await authService.generateToken(user);
+        await user.addAuthToken(authToken);
+    } catch(error) {
+        authToken = await db.AuthToken.findOne({ where: { user_id: user.id }})
+    }
 
     const result = {
         data: {
+            uid: user.uid,
             username: user.name,
             email: user.email,
         },
@@ -60,7 +71,7 @@ async function create(registerUser) {
     }).spread(async (user, created) => {
 
         if (!created) {
-            throw new errors.ConflictError("User already exists.");
+            throw new errors.ConflictError(messages.userAlreadyExists);
         }
 
         const emailValidationUrl =

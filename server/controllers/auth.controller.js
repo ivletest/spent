@@ -63,7 +63,7 @@ router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
  * @apiSuccess {String} username  Name of the logged in user.
  * @apiSuccess {String} email     Email of the logged in user.
  *
- * @apiError (400 BadRequest) BadRequest Invalid credentials.
+ * @apiError (401 Unauthorized) Unauthorized Invalid credentials.
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
  * @apiSuccessExample  {json} Success
@@ -73,10 +73,10 @@ router.post({ path: `${authPath}/register`, version: ['1.0.0'] },
  *      "email": "mail@email.com"
  *  }
  *
- * @apiErrorExample {json} BadRequest
- *  HTTP/1.1 409 Bad Request
+ * @apiErrorExample {json} Unauthorized
+ *  HTTP/1.1 401 Unauthorized
  *  {
- *      "code": "BadRequest",
+ *      "code": "Unauthorized",
  *      "message": "Invalid credentials"
  *  }
  */

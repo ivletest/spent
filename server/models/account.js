@@ -17,16 +17,17 @@ module.exports = (sequelize, DataTypes) => {
         currency: DataTypes.TEXT
     }, {
         paranoid: true,
-        underscored: true
+        underscored: true,
+        indexes: [
+            { fields: ["id"], unique: true },
+            { fields: ["uid"], unique: true },
+            { fields: ["id", "parent_account_id"] }
+        ]
     });
 
     Account.associate = function (models) {
         Account.belongsToMany(models.User, { through: "user_accounts" });
-        Account.belongsTo(models.Account, {
-            foreignKey: "parent_account_uid",
-            targetKey: "uid",
-            type: DataTypes.UUID
-        });
+        Account.belongsTo(models.Account, { as: "parent_account" });
 
         Account.hasMany(models.Income, { as: "incomes" });
         Account.hasMany(models.Expense, { as: "expenses" });

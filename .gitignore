@@ -107,3 +107,6 @@ dist
 
 #VSCode folder
 .vscode/
+
+#Generated documentation folder
+.server/www/doc/
