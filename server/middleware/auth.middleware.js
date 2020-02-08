@@ -1,5 +1,7 @@
 'use strict';
 const db = require("../models/index");
+const errors = require("restify-errors");
+const messages = require("../common/messages");
 
 module.exports = async function (request, response, next) {
 
@@ -14,8 +16,14 @@ module.exports = async function (request, response, next) {
             }]
         });
 
+        const isAllowed = request.method === "POST" &&
+                          (request.url === "/auth/login" ||
+                          request.url === "/auth/register");
+
         if (authToken) {
             request.user = authToken.User;
+        } else if (!isAllowed) {
+            response.send(401, errors.UnauthorizedError(messages.unauthorized));
         }
     }
 
