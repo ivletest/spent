@@ -4,7 +4,7 @@ const errors = require("restify-errors");
 // Use hardcoded url for debugging
 // const url = "localhost:3000";
 const url = `${process.env.HOST}:${process.env.PORT}`;
-
+console.log(`Testing url: ${url}`);
 
 // User data
 const username = "Test user."
