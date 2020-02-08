@@ -12,7 +12,7 @@
     "env": {
         "APP_ROOT": {
             "description": "root folder of the server workspace",
-            "value": "/server"
+            "value": "~/app/server"
         }
     },
     "environments": {
@@ -22,7 +22,7 @@
             ]
         },
         "scripts": {
-            "test": "mocha ./server/test/**/*.js --recursive --timeout 10000 --exit"
+            "test": "node ./server/prebuild && mocha ./server/test/**/*.js --recursive --timeout 10000 --exit"
         }
     }
 }
