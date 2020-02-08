@@ -5,6 +5,9 @@
     "author": "ivletest <karakan@protonmail.com>",
     "license": "MIT",
     "private": true,
+    "scripts": {
+        "test": "cross-env NODE_ENV=test mocha ./server/test/**/*.js --recursive --timeout 10000 --exit"
+    },
     "workspaces": [
         "app",
         "server"
