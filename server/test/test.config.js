@@ -1,9 +1,7 @@
 const messages = require("../common/messages");
 const errors = require("restify-errors");
+const url = require("../server").server.url;
 
-// Use hardcoded url for debugging
-// const url = "localhost:3000";
-const url = `${process.env.HOST}:${process.env.PORT}`;
 console.log(`Testing url: ${url}`);
 
 // User data
