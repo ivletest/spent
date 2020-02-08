@@ -13,20 +13,18 @@ const port = Number(process.env.PORT) || 3000;
 const isDevelopment = process.env.NODE_ENV === "development";
 
 //Sync Database
-if (process.env.NODE_ENV !== "test") {
-    db.sequelize.sync({
-        force: process.env.DATABASE_FORCE_REBUILD
-    });
+db.sequelize.sync({
+    force: process.env.DATABASE_FORCE_REBUILD
+});
 
-    if (isDevelopment) {
-        childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
-            if (error) {
-                console.log(`exec error: ${error}`);
-            }
-            console.log(stdout);
-            console.log(stderr);
-        });
-    }
+if (isDevelopment) {
+    childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`exec error: ${error}`);
+        }
+        console.log(stdout);
+        console.log(stderr);
+    });
 }
 
 // Create Server

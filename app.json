@@ -1,0 +1,22 @@
+{
+    "name": "spent",
+    "scripts": {},
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "https://github.com/blockhq/heroku-buildpack-yarn-workspaces#master"
+        }
+    ],
+    "environments": {
+        "test": {
+            "addons": [
+                "heroku-postgresql:in-dyno"
+            ]
+        },
+        "scripts": {
+            "test": "mocha ./server/test/**/*.js --recursive --timeout 10000 --exit"
+        }
+    }
+}
