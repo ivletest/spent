@@ -29,13 +29,13 @@ async function create(accountData) {
     return accountResponse;
 }
 
-async function getAllAccounts(userUid) {
-    const accounts = db.Accounts.findAll({
+async function getAllAccounts(user) {
+    const accounts = await db.Accounts.findAll({
         attributes: ["uid", "is_private", "parent_account_id", "balance"],
         include: [{
             as: "user_id",
             model: db.User,
-            where: { uid: userUid }
+            where: { uid: user.uid }
         }]
     });
 
