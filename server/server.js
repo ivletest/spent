@@ -15,9 +15,9 @@ const isDevelopment = process.env.NODE_ENV === "development";
 //Sync Database
 if (process.env.NODE_ENV !== "test") {
     db.sequelize.sync({
-        force: isDevelopment
+        force: process.env.DATABASE_FORCE_REBUILD
     });
-    
+
     if (isDevelopment) {
         childProcess.exec("npx sequelize-cli db:seed:all", (error, stdout, stderr) => {
             if (error) {
@@ -33,7 +33,7 @@ if (process.env.NODE_ENV !== "test") {
 global.server = restify.createServer({
     name: "Spent API",
     version: "1.0.0",
-    url: process.env.HOST    
+    url: process.env.HOST
 });
 
 // Configure Middleware

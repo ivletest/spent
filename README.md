@@ -35,14 +35,12 @@ yarn install
 ### Environment file
 Place `.env` file in the root of the repository and format it like:
 ```
-HOST= application host
-PORT= application port
-
 DATABASE_HOST= database host
 DATABASE_NAME= database name
 DATABASE_PORT= database port
 DATABASE_USER= postgres user
 DATABASE_PASS= postgres password
+DATABASE_FORCE_REBUILD= (boolean) drop and rebuild database
 ```
 
 ### Running the project
