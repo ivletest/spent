@@ -26,8 +26,15 @@ async function authenticate(loginUser) {
 };
 
 async function authorize(user) {
-    const authToken = await authService.generateToken(user);
-    await user.addAuthToken(authToken);
+
+    let authToken;
+
+    try {
+        authToken = await authService.generateToken(user);
+        await user.addAuthToken(authToken);
+    } catch(error) {
+        authToken = await db.AuthToken.findOne({ where: { user_id: user.id }})
+    }
 
     const result = {
         data: {

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNulls: false
         }
-    }, { 
+    }, {
         underscored: true,
         indexes: [
             { fields: ["id"], unique: true },
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
     AuthToken.associate = function (models) {
         AuthToken.belongsTo(models.User, {
-            as: "user_id",
+            as: "user",
             unique: true
         });
     };
