@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "doc": "apidoc -i ./controllers/ -o ../www/doc/v1/",
+        "doc": "apidoc -i ./controllers/ -o ./www/doc/v1/",
         "start": "apidoc -i ./controllers/ -o ./www/doc/v1/ && node index.js",
         "dev": "cross-env NODE_ENV=development nodemon index.js",
         "test": "cross-env NODE_ENV=test mocha ./test/**/*.js --recursive --timeout 10000 --exit"
