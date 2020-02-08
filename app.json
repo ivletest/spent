@@ -12,7 +12,7 @@
     "env": {
         "APP_ROOT": {
             "description": "root folder of the server workspace",
-            "value": "~/server"
+            "value": "server"
         }
     },
     "environments": {
