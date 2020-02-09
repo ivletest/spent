@@ -1,8 +1,0 @@
-{
-  "appId": "io.ionic.starter",
-  "appName": "spent-mobile-app",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "www",
-  "cordova": {}
-}

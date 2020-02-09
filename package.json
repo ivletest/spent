@@ -6,7 +6,7 @@
     "license": "MIT",
     "private": true,
     "workspaces": [
-        "mobile-app",
+        "mobile_app",
         "server"
     ],
     "resolutions": {}
