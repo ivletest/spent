@@ -16,16 +16,23 @@ module.exports = async function (request, response, next) {
             }]
         });
 
-        const isAllowed = request.method === "POST" &&
-                          (request.url === "/auth/login" ||
-                          request.url === "/auth/register");
-
-        if (authToken) {
-            request.user = authToken.User;
-        } else if (!isAllowed) {
-            response.send(401, errors.UnauthorizedError(messages.unauthorized));
+        if (!authToken) {
+            response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+            return;
         }
-    }
 
-    next();
+        request.user = authToken.User;
+        next();
+
+    } else {
+        const allowAnonymous = request.method === "POST" &&
+            (request.url === "/auth/login" || request.url === "/auth/register");
+
+        if (!allowAnonymous) {
+            response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+            return;
+        }
+
+        next();
+    }
 }

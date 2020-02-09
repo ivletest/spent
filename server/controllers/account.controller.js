@@ -90,6 +90,5 @@ router.get({ path: `${accountPath}`, version: ['1.0.0'] },
         } catch(error) {
             response.send(error);
         }
-
     });
 // GET ACCOUNT
