@@ -110,3 +110,45 @@ dist
 
 #Generated documentation folder
 .server/www/doc/
+
+# Flutter
+# Miscellaneous
+mobile_app/*.class
+mobile_app/*.log
+mobile_app/*.pyc
+mobile_app/*.swp
+mobile_app/.DS_Store
+mobile_app/.atom/
+mobile_app/.buildlog/
+mobile_app/.history
+mobile_app/.svn/
+
+# IntelliJ related
+mobile_app/*.iml
+mobile_app/*.ipr
+mobile_app/*.iws
+mobile_app/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+mobile_app/**/doc/api/
+mobile_app/.dart_tool/
+mobile_app/.flutter-plugins
+mobile_app/.flutter-plugins-dependencies
+mobile_app/.packages
+mobile_app/.pub-cache/
+mobile_app/.pub/
+mobile_app/build/
+
+# Web related
+mobile_app/lib/generated_plugin_registrant.dart
+
+# Exceptions to above rules.
+mobile_app/!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+
+

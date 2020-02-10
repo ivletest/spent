@@ -11,7 +11,7 @@
     * PostgreSQL ^11.6
     * Sequelize ^5.21
     * Restify ^8.5
-    * Ionic Framework ^5.4
+    * Flutter
     * Apidoc ^0.20
 ## Setup
 
