@@ -2,35 +2,33 @@ require("../index");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { url, messages, errors, username, email, password } = require("./test.config");
+const { url, messages, errors, user } = require("./test.config");
 const route = "/auth/login";
 
 chai.use(chaiHttp);
 chai.should();
 const expect = chai.expect;
 
-let token = "";
-
 describe("/POST auth/login", () => {
 
     it("400 Bad Request - email is invalid", (done) => {
-        testInvalidInputDataCase(done, "invalidEmail", password);
+        testInvalidInputDataCase(done, "invalidEmail", user.password);
     });
 
     it("400 Bad Request - password is invalid", (done) => {
-        testInvalidInputDataCase(done, email, null);
+        testInvalidInputDataCase(done, user.email, null);
     });
 
     it("401 Unauthorized - user does not exist", (done) => {
-        testInvalidCredentialsCase(done, `nonexistent${email}`, password)
+        testInvalidCredentialsCase(done, `nonexistent${user.email}`, user.password)
     });
 
     it("401 Unauthorized - wrong password", (done) => {
-        testInvalidCredentialsCase(done, email, "WrongPass401")
+        testInvalidCredentialsCase(done, user.email, "WrongPass401")
     });
 
     it("200 OK - user logged in", (done) => {
-        testLoginSuccess(done, email, password)
+        testLoginSuccess(done, user.email, user.password)
     });
 });
 
@@ -77,9 +75,7 @@ function testLoginSuccess(done, email, password) {
             response.body.should.have.property("username");
             response.body.should.have.property("email");
 
-            token = response.header.auth_token;
+            user.token = response.header.auth_token;
             done();
         });
 }
-
-module.exports = { token };

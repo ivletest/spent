@@ -81,11 +81,8 @@ router.post({ path: `${accountPath}`, version: ['1.0.0'] },
  */
 router.get({ path: `${accountPath}`, version: ['1.0.0'] },
     async (request, response, next) => {
-
         try {
-            const user = request.user;
-            const result = await accountService.getAllAccounts(user);
-
+            const result = await accountService.getAllAccounts(request.user);
             response.send(200, result)
         } catch(error) {
             response.send(error);

@@ -5,8 +5,11 @@ const url = require("../server").server.url;
 console.log(`Testing url: ${url}`);
 
 // User data
-const username = "Test user."
-const email = `test${Math.floor(Math.random() * 89999) + 10000}@email.com`;
-const password = "Testpass0";
+const user = {
+    username: "Test user.",
+    email: `test${Math.floor(Math.random() * 89999) + 10000}@email.com`,
+    password: "Testpass0",
+    token: ""
+}
 
-module.exports = { url, messages, errors, username, email, password };
+module.exports = { url, messages, errors, user };

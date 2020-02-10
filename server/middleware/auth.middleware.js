@@ -16,12 +16,12 @@ module.exports = async function (request, response, next) {
             }]
         });
 
-        if (!authToken) {
+        if (!authToken || !authToken.user) {
             response.send(401, new errors.UnauthorizedError(messages.unauthorized));
             return;
         }
 
-        request.user = authToken.User;
+        request.user = authToken.user;
         next();
 
     } else {

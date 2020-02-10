@@ -30,12 +30,11 @@ async function create(accountData) {
 }
 
 async function getAllAccounts(user) {
-    const accounts = await db.Accounts.findAll({
+    const accounts = await db.Account.findAll({
         attributes: ["uid", "is_private", "parent_account_id", "balance"],
         include: [{
-            as: "user_id",
             model: db.User,
-            where: { uid: user.uid }
+            where: { id: user.id }
         }]
     });
 

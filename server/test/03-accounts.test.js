@@ -3,8 +3,7 @@ require("../index");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { url, messages, errors } = require("./test.config");
-const user = require("./02-login.test");
+const { url, messages, errors, user } = require("./test.config");
 const route = "/accounts";
 
 chai.use(chaiHttp);
@@ -47,13 +46,13 @@ function testGetAllAccounsUnauthorized(done) {
 
 function testGetAllAccounsSuccess(done) {
     chai.request(url)
-        .post(route)
+        .get(route)
         .set('content-type', 'application/x-www-form-urlencoded')
         .set('auth_token', user.token)
         .send()
         .end((error, response) => {
             response.should.have.status(200);
-            response.body.should.be.a("object");
+            response.body.should.be.a("array");
             done();
         });
 }

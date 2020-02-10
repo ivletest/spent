@@ -3,7 +3,7 @@ require("../index");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { url, messages, errors, username, email, password } = require("./test.config");
+const { url, messages, errors, user } = require("./test.config");
 const route = "/auth/register";
 
 chai.use(chaiHttp);
@@ -13,23 +13,23 @@ const expect = chai.expect;
 describe("/POST auth/register", () => {
 
     it("400 Bad Request - email is invalid", (done) => {
-        testInvalidInputDataCase(done, username, "invalidEmail", password);
+        testInvalidInputDataCase(done, user.username, "invalidEmail", user.password);
     });
 
     it("400 Bad Request - username is invalid", (done) => {
-        testInvalidInputDataCase(done, null, email, password);
+        testInvalidInputDataCase(done, null, user.email, user.password);
     });
 
     it("400 Bad Request - password is invalid", (done) => {
-        testInvalidInputDataCase(done, username, email, "invalidPassword");
+        testInvalidInputDataCase(done, user.username, user.email, "invalidPassword");
     });
 
     it("201 Created - user created", (done) => {
-        testUserRegisterSuccess(done, username, email, password);
+        testUserRegisterSuccess(done, user.username, user.email, user.password);
     });
 
     it("409 Conflict - user already exists", (done) => {
-        testUserAlreadyExistsCase(done, username, email, password);
+        testUserAlreadyExistsCase(done, user.username, user.email, user.password);
     });
 
 });
@@ -80,5 +80,3 @@ function testUserRegisterSuccess(done, username, email, password) {
             done();
         });
 }
-
-module.exports = { username, email, password };
