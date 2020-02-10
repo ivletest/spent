@@ -107,8 +107,8 @@ router.post(authPath, (request, response, next) => {
  * @apiName Logout
  * @apiGroup Authentication
  *
- * @apiHeader {String} auth_token Authentication token.
- *
+ * @apiSuccess (204 NoContent) Empty body.
+ * 
  * @apiError (400 BadRequest) BadRequest Invalid input data.
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
@@ -121,7 +121,6 @@ router.post(authPath, (request, response, next) => {
  */
 router.del({ path: `${authPath}/logout`, version: ['1.0.0'] },
     async (request, response, next) => {
-
         try {
             const token = mapInput.toLogoutUserModel(request);
             await userService.logout(token);
