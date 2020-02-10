@@ -1,5 +1,7 @@
 'use strict';
 const db = require("../models/index");
+const errors = require("restify-errors");
+const messages = require("../common/messages");
 
 module.exports = async function (request, response, next) {
 
@@ -14,10 +16,23 @@ module.exports = async function (request, response, next) {
             }]
         });
 
-        if (authToken) {
-            request.user = authToken.User;
+        if (!authToken) {
+            response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+            return;
         }
-    }
 
-    next();
+        request.user = authToken.User;
+        next();
+
+    } else {
+        const allowAnonymous = request.method === "POST" &&
+            (request.url === "/auth/login" || request.url === "/auth/register");
+
+        if (!allowAnonymous) {
+            response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+            return;
+        }
+
+        next();
+    }
 }

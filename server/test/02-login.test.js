@@ -1,8 +1,8 @@
-require("../../index");
+require("../index");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { url, messages, errors, username, email, password } = require("../test.config");
+const { url, messages, errors, username, email, password } = require("./test.config");
 const route = "/auth/login";
 
 chai.use(chaiHttp);

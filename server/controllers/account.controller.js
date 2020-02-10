@@ -4,14 +4,13 @@ const router = require("../server").server;
 const mapInput = require("../services/account/account.mapper");
 const accountService = require("../services/account/account.service");
 
-const accountPath = "/:uid/accounts";
+const accountPath = "/accounts";
 // CREATE ACCOUNT
 /**
- * @api {post} /:uid/accounts/create Create account.
+ * @api {post} /accounts/ Create account.
  * @apiName CreateAccount
  * @apiGroup Financial
  *
- * @apiParam {UUID} userUid   User uid.
  * @apiParam {Boolean} isPrivate  Sets account to private.
  * @apiParam {Decimal} balance  Account balance.
  * @apiParam {String} currency  Account currency.
@@ -24,7 +23,7 @@ const accountPath = "/:uid/accounts";
  * @apiSuccess {String} currency Account currency.
  *
  *
- * @apiError (400 BadRequest) BadRequest User does not exist.
+ * @apiError (401 Unauthorized) Unauthorized User is not authorized.
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
  * @apiSuccessExample  {json} Success
@@ -36,14 +35,14 @@ const accountPath = "/:uid/accounts";
  *      "currency": "mkd"
  *  }
  *
- * @apiErrorExample {json} BadRequest
- *  HTTP/1.1 409 Bad Request
+ * @apiErrorExample {json} Unauthorized
+ *  HTTP/1.1 401 Unauthorized
  *  {
- *      "code": "BadRequest",
- *      "message": "User does not exist."
+ *      "code": "Unautorized",
+ *      "message": "Unauthorized user."
  *  }
  */
-router.post({ path: `${accountPath}/create`, version: ['1.0.0'] },
+router.post({ path: `${accountPath}`, version: ['1.0.0'] },
     async (request, response, next) => {
         try {
             const accountData = mapInput.toCreateAccountModel(request);
@@ -60,20 +59,12 @@ router.post({ path: `${accountPath}/create`, version: ['1.0.0'] },
  * @apiName GetAllAccounts
  * @apiGroup Financial
  *
- * @apiParam {UUID} userUid   User uid.
  *
- *
- * @apiSuccess {UUID} uid  Uid of the account.
- * @apiParam {Boolean} isPrivate Tells if the account is private.
- * @apiParam {Decimal} balance  Account balance.
- * @apiSuccess {String} currency Account currency.
- *
- *
- * @apiError (400 BadRequest) BadRequest User does not exist.
+ * @apiError (401 Unauthorized) Unauthorized User is not authorized.
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
  * @apiSuccessExample  {json} Success
- *  HTTP/1.1 201 Created
+ *  HTTP/1.1 200 OK
  *  {
  *      "uid": "a3ed181c-3519-4bc0-9889-be9ee9069006",
  *      "isPrivate": true,
@@ -81,24 +72,23 @@ router.post({ path: `${accountPath}/create`, version: ['1.0.0'] },
  *      "currency": "mkd"
  *  }
  *
- * @apiErrorExample {json} BadRequest
- *  HTTP/1.1 409 Bad Request
+ * @apiErrorExample {json} Unauthorized
+ *  HTTP/1.1 401 Unauthorized
  *  {
- *      "code": "BadRequest",
- *      "message": "User does not exist."
+ *      "code": "Unautorized",
+ *      "message": "Unauthorized user."
  *  }
  */
 router.get({ path: `${accountPath}`, version: ['1.0.0'] },
     async (request, response, next) => {
 
         try {
-            const userUid = mapInput.toGetAllAccountsModel(request);
-            const result = await accountService.getAllAccounts(userUid);
+            const user = request.user;
+            const result = await accountService.getAllAccounts(user);
 
             response.send(200, result)
         } catch(error) {
             response.send(error);
         }
-
     });
 // GET ACCOUNT
