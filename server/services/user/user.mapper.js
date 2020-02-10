@@ -68,9 +68,25 @@ function toVerifyEmailModel(request) {
     return validateUserModel;
 }
 
+function toCurrentUserModel(request) {
+    
+    if (!request.user) {
+        throw new errors.InternalServerError(messages.internalServerError);
+    }
+
+    const currentUserModel = {
+        uid: request.user.uid,
+        username: request.user.name,
+        email: request.user.email
+    }
+
+    return currentUserModel;
+}
+
 module.exports = {
     toRegisterUserModel,
     toLoginUserModel,
     toLogoutUserModel,
-     toVerifyEmailModel
+    toVerifyEmailModel,
+    toCurrentUserModel
 }

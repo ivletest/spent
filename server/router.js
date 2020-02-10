@@ -1,10 +1,12 @@
 const authController = require("./controllers/auth.controller");
-const accountController = require("./controllers/account.controller");
+const accountsController = require("./controllers/accounts.controller");
+const usersController = require("./controllers/users.controller");
 const staticController = require("./controllers/static.controller");
 
 const router = [
   authController,
-  accountController,
+  accountsController,
+  usersController,
   staticController
 ];
 
