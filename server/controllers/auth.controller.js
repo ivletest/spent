@@ -158,7 +158,7 @@ router.del(authPath, (request, response, next) => {
  *      "message": "Invalid input data"
  *  }
  */
-router.patch({ path: `${authPath}/validate/:uid`, version: ['1.0.0'] },
+router.patch({ path: `${authPath}/:uid/validate/:validation_uid`, version: ['1.0.0'] },
     async (request, response, next) => {
         try {
             const verificationData = mapInput.toVerifyEmailModel(request);

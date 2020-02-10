@@ -2,5 +2,6 @@ module.exports = {
     invalidInputData: "Invalid input data.",
     invalidCredentials: "Invalid credentials.",
     userAlreadyExists: "User already exists.",
-    unauthorized: "Unauthorized user."
+    unauthorized: "Unauthorized user.",
+    emailNotVerified: "Email not verified."
 }

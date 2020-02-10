@@ -97,7 +97,6 @@ async function verify(validateUserData) {
             emailValidationUid: validateUserData.emailValidationUid
         }
     });
-
 }
 
 module.exports = {

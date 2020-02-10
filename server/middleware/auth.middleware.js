@@ -3,36 +3,39 @@ const db = require("../models/index");
 const errors = require("restify-errors");
 const messages = require("../common/messages");
 
+const allowAnonymous = ["/auth/login", "/auth/register"];
+const allowUnverified = ["/auth/logout"];
+
 module.exports = async function (request, response, next) {
 
-    const token = request.header("auth_token");
+    const requestToken = request.header("auth_token");
 
-    if (token) {
-        const authToken = await db.AuthToken.findOne({
-            where: { token },
+    if (requestToken) {
+        const token = await db.AuthToken.findOne({
+            where: { token: requestToken },
             include: [{
                 model: db.User,
                 as: "user"
             }]
         });
 
-        if (!authToken || !authToken.user) {
+        if (!token || !token.user) {
             response.send(401, new errors.UnauthorizedError(messages.unauthorized));
             return;
         }
 
-        request.user = authToken.user;
-        next();
-
-    } else {
-        const allowAnonymous = request.method === "POST" &&
-            (request.url === "/auth/login" || request.url === "/auth/register");
-
-        if (!allowAnonymous) {
-            response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+        if (!token.user.emailIsValid && !allowUnverified.includes(request.url)) {
+            response.send(403, new errors.ForbiddenError(messages.emailNotVerified));
             return;
         }
 
-        next();
+        request.user = token.user;
+
+    } else if (!allowAnonymous.includes(request.url)) {
+        response.send(401, new errors.UnauthorizedError(messages.unauthorized));
+        return;
+
     }
+
+    next();
 }
