@@ -10,6 +10,10 @@ chai.should();
 const expect = chai.expect;
 
 describe("/POST auth/logout", () => {
+    
+    it("401 Unauthorized - no auth token provided", (done) => {
+        testNoTokenCase(done)
+    });
 
     it("401 Unauthorized - invalid auth token", (done) => {
         testInvalidTokenCase(done)
@@ -29,11 +33,22 @@ function testErrorCase(response, status, error) {
     expect(response.body.message).to.equal(error.message);
 }
 
+function testNoTokenCase(done) {
+    chai.request(url)
+        .delete(route)
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .send()
+        .end((error, response) => {
+            testErrorCase(response, 401, new errors.UnauthorizedError(messages.unauthorized));
+            done();
+        });
+}
 
 function testInvalidTokenCase(done) {
     chai.request(url)
         .delete(route)
         .set('content-type', 'application/x-www-form-urlencoded')
+        .set("auth_token", "SomeInvalidTokenData")
         .send()
         .end((error, response) => {
             testErrorCase(response, 401, new errors.UnauthorizedError(messages.unauthorized));
