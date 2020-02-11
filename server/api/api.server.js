@@ -2,7 +2,7 @@
 require("dotenv").config();
 const path = require("path");
 const restify = require("restify");
-const authMiddleware = require("./middleware/auth.middleware");
+const authMiddleware = require("../middleware/auth.middleware");
 
 global.staticFolder = `${path.resolve(__dirname)}/www`;
 

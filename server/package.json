@@ -18,13 +18,16 @@
         "cross-env": "^7.0.0",
         "dotenv": "^8.2.0",
         "eslint": "^6.8.0",
+        "mailparser": "^2.7.7",
+        "nodemailer": "^6.4.2",
         "pg": "^7.17.1",
         "pg-hstore": "^2.3.3",
         "restify": "^8.5.1",
         "restify-cors-middleware": "^1.1.1",
         "restify-errors": "^8.0.2",
         "sequelize": "^5.21.3",
-        "sequelize-cli": "^5.5.1"
+        "sequelize-cli": "^5.5.1",
+        "smtp-server": "^3.5.0"
     },
     "devDependencies": {
         "chai": "^4.2.0",

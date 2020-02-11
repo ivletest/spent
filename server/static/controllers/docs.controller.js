@@ -1,6 +1,6 @@
 'use strict';
 require("dotenv").config();
-const router = require("../../server").server;
+const router = require("../static.server").server;
 const restify = require("restify");
 
 // GET DOCUMENTATION
