@@ -54,22 +54,22 @@ function toLogoutUserModel(request) {
 
 function toVerifyEmailModel(request) {
     const userUid = request.params.uid;
-    const emailValidationUid = request.query.validation_uid;
+    const verificationUid = request.query.verification_uid;
 
-    if (!userUid.isValidUid() || !emailValidationUid.isValidUid()) {
+    if (!userUid.isValidUid() || !verificationUid.isValidUid()) {
         throw new errors.BadRequestError(messages.invalidInputData);
     }
 
     const validateUserModel = {
         userUid,
-        emailValidationUid
+        emailValidationUid: verificationUid
     }
 
     return validateUserModel;
 }
 
 function toCurrentUserModel(request) {
-    
+
     if (!request.user) {
         throw new errors.InternalServerError(messages.internalServerError);
     }

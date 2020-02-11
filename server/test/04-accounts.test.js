@@ -11,7 +11,6 @@ chai.should();
 const expect = chai.expect;
 
 
-
 describe("/GET /accounts", () => {
 
     it ("401 Unauthorized - user not logged in", (done) => {

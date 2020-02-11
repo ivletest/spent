@@ -108,7 +108,7 @@ router.post(authPath, (request, response, next) => {
  * @apiGroup Authentication
  *
  * @apiSuccess (204 NoContent) Empty body.
- * 
+ *
  * @apiError (400 BadRequest) BadRequest Invalid input data.
  * @apiError (500 InternalServerError) InternalServerError The server encountered an internal error
  *
@@ -158,7 +158,7 @@ router.del(authPath, (request, response, next) => {
  *      "message": "Invalid input data"
  *  }
  */
-router.patch({ path: `${authPath}/:uid/validate/:validation_uid`, version: ['1.0.0'] },
+router.patch({ path: `${authPath}/:uid/verify/:verification_uid`, version: ['1.0.0'] },
     async (request, response, next) => {
         try {
             const verificationData = mapInput.toVerifyEmailModel(request);

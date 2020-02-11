@@ -13,6 +13,13 @@ async function generateToken(user) {
     return result;
 }
 
+async function sendVerificationLinkEmail(user) {
+    if (!user) {
+        throw new errors.InternalServerError("Invalid user.");
+    }
+    const url = `${process.env.HOST}/${user.uid}/verify/${user.emailValidationUid}`;
+}
+
 module.exports = {
     generateToken
 }
