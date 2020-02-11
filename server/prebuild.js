@@ -1,4 +1,4 @@
-const db = require("./models/index");
+const db = require("./db/models/index");
 const childProcess = require("child_process");
 
 //Sync Database

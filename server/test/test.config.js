@@ -1,4 +1,4 @@
-const messages = require("../common/messages");
+const messages = require("../api/common/messages");
 const errors = require("restify-errors");
 const url = require("../server").server.url;
 

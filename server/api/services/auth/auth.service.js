@@ -1,4 +1,4 @@
-const db = require("../../models/index");
+const db = require("../../../db/models/index");
 const errors = require("restify-errors");
 const bcrypt = require("bcrypt");
 

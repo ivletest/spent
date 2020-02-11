@@ -1,5 +1,5 @@
 'use strict'
-const db = require("../../models/index");
+const db = require("../../../db/models/index");
 const authService = require("../auth/auth.service");
 const errors = require("restify-errors");
 const bcrypt = require("bcrypt");
