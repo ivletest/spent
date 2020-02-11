@@ -21,14 +21,16 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     UserSettings.associate = function (models) {
-        
+
         UserSettings.belongsTo(models.User, {
             as: "user",
             unique: true
         });
 
         UserSettings.hasOne(models.Account, {
-            as: "pinned_account"
+            as: "pinned_account",
+            unique: true,
+            allowNulls: true
         })
     };
 
