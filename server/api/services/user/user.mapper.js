@@ -1,6 +1,6 @@
 'use strict';
 require("../validation.service");
-const messages = require("../../common/messages");
+const messages = require("../../../common/messages");
 const bcrypt = require("bcrypt");
 const errors = require("restify-errors");
 

@@ -1,5 +1,19 @@
-var httpProxy = require('http-proxy');
+require("dotenv").config();
+const http = require("http");
+const httpProxy = require("http-proxy");
 
-var proxy = httpProxy.createProxyServer();
+const proxy = httpProxy.createProxyServer();
 
-httpProxy.createProxyServer({target:'http://localhost:9000'}).listen(8000);
+
+
+const server = http.createServer((request, response) => {
+    console.log(request.url);
+    proxy.web(request, response, { 
+        target: {
+            host: process.env.API_HOST,
+            port: process.env.API_PORT
+        }
+    });
+});
+
+module.exports = server;

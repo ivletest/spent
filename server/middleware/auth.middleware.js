@@ -1,7 +1,7 @@
 'use strict';
 const db = require("../db/models/index");
 const errors = require("restify-errors");
-const messages = require("../api/common/messages");
+const messages = require("../common/messages");
 
 const allowAnonymous = ["/auth/login", "/auth/register", "doc/v1"];
 const allowUnverified = ["/auth/logout"];

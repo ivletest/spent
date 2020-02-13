@@ -3,7 +3,7 @@ const db = require("../../../db/models/index");
 const authService = require("../auth/auth.service");
 const errors = require("restify-errors");
 const bcrypt = require("bcrypt");
-const messages = require("../../common/messages");
+const messages = require("../../../common/messages");
 
 async function authenticate(loginUser) {
     const user = await db.User.findOne({

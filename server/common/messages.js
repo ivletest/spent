@@ -4,5 +4,6 @@ module.exports = {
     userAlreadyExists: "User already exists.",
     unauthorized: "Unauthorized user.",
     emailNotVerified: "Email not verified.",
-    internalServerError: "The server encountered an internal error."
+    internalServerError: "The server encountered an internal error.",
+    notFound: "Resource not found."
 }

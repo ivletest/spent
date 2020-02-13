@@ -1,6 +1,6 @@
 'use strict';
 require("dotenv").config();
-const router = require("../api.server").server;
+const router = require("../api.server");
 const mapInput = require("../services/user/user.mapper");
 const userService = require("../services/user/user.service");
 

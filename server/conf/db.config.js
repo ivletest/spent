@@ -10,10 +10,10 @@ module.exports = {
     dialect: "postgres",
     operatorsAliases: 0,
     pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
     }
   },
   test: {
@@ -26,10 +26,10 @@ module.exports = {
     logging: false,
     operatorsAliases: 0,
     pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
     }
   },
   production: {
@@ -41,10 +41,10 @@ module.exports = {
     dialect: "postgres",
     operatorsAliases: 0,
     pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
     }
   }
 }

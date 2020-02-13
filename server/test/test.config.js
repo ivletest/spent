@@ -1,6 +1,6 @@
-const messages = require("../api/common/messages");
+const messages = require("../common/messages");
 const errors = require("restify-errors");
-const url = require("../server").server.url;
+const url = require("../api/api.server").url;
 
 console.log(`Testing url: ${url}`);
 

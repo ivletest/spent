@@ -9,7 +9,7 @@ global.staticFolder = `${path.resolve(__dirname)}/www`;
 const port = Number(process.env.PORT) || 3000;
 
 // Create Server
-global.server = restify.createServer({
+const server = restify.createServer({
     name: "Spent API",
     version: "1.0.0",
     url: process.env.HOST
@@ -26,4 +26,4 @@ server.use(restify.plugins.bodyParser({
 server.use(authMiddleware);
 
 // Export Module
-module.exports = { server, port };
+module.exports = server;
