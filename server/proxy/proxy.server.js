@@ -7,7 +7,6 @@ const proxy = httpProxy.createProxyServer();
 
 
 const server = http.createServer((request, response) => {
-    console.log(request.url);
     proxy.web(request, response, { 
         target: {
             host: process.env.API_HOST,
