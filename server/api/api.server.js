@@ -1,12 +1,7 @@
 'use strict';
 require("dotenv").config();
-const path = require("path");
 const restify = require("restify");
 const authMiddleware = require("../middleware/auth.middleware");
-
-global.staticFolder = `${path.resolve(__dirname)}/www`;
-
-const port = Number(process.env.PORT) || 3000;
 
 // Create Server
 const server = restify.createServer({

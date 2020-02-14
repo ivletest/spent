@@ -109,7 +109,7 @@ dist
 .vscode/
 
 #Generated documentation folder
-.server/www/doc/
+server/static/www/doc/
 
 # Flutter
 # Miscellaneous
